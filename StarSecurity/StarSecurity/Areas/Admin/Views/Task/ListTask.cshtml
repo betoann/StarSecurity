@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "Task";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Task List</h4>
+                    <form action="" class="form-sample" method="post">
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <select class="form-control">
+                                    <option>Status</option>
+                                    <option>Processed</option>
+                                    <option>Waitting</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <button type="submit" class="btn-sm btn-primary me-2">
+                                    <i class="mdi mdi-filter"></i>
+                                    Filter
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Staff assigned</th>
+                                    <th>Name of client</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nguyen Dang Toan</td>
+                                    <td>Bui Phuong Mai</td>
+                                    <td>05/10/2023</td>
+                                    <td><label class="badge badge-success">Processed</label></td>
+                                    <td>
+                                        <a href="~/Admin/Task/DetailTask" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
+                                        <a href="~/Admin/Task/EditTask" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
+                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Pham Truong</td>
+                                    <td>Nguyen Asd</td>
+                                    <td>05/10/2023</td>
+                                    <td><label class="badge badge-success">Processed</label></td>
+                                    <td>
+                                        <a class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
+                                        <a class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
+                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nguyen Dang Toan</td>
+                                    <td>Bui Phuong Mei</td>
+                                    <td>05/10/2023</td>
+                                    <td><label class="badge badge-danger">Waitting</label></td>
+                                    <td>
+                                        <a class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
+                                        <a class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
+                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

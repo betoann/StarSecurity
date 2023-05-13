@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "AddService";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add Service</h4>
+                    @Html.Raw(ViewBag.ds)
+                    @*<p class="card-description">
+                        Basic form layout
+                    </p>*@
+                    <form action="AddService" class="forms-sample" method="post">
+                        <div class="form-group">
+                            <label for="nameService">Name of Service</label>
+                            <input type="text" class="form-control" id="nameService" placeholder="Name of Service" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" class="form-control" id="description" required ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="Status">Status</label>
+                            <select class="form-control" id="Status">
+                                <option value="1">Active</option>
+                                <option value="0">Temporarily stop working</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="ti-file btn-icon-prepend"></i>
+                            Save
+                        </button>
+                        <a href="~/Admin/Service/ListService" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ckeditorJS{
+    <script>
+        CKEDITOR.replace("description");
+    </script>
+}

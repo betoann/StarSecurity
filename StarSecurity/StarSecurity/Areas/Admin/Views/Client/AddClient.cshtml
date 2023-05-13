@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "AddClient";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add Client</h4>
+                    @*<p class="card-description">
+                    Basic form layout
+                    </p>*@
+                    <form action="AddClient" class="forms-sample" method="post">
+                        <div class="form-group">
+                            <label for="nameService">Name of Client</label>
+                            <input type="text" class="form-control" id="nameService" placeholder="Name of Client" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control" id="gender">
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of birth</label>
+                            <input type="date" class="form-control" id="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Status">Status</label>
+                            <select class="form-control" id="Status">
+                                <option value="1">Active</option>
+                                <option value="0">Temporarily stop working</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="ti-file btn-icon-prepend"></i>
+                            Save
+                        </button>
+                        <a href="~/Admin/Client/ListClient" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewData["Title"] = "EditEmployee";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Employee</h4>
+                    <form class="form-sample">
+                        @*<p class="card-description">
+                        Personal info
+                        </p>*@
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Name of Employee</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="nameEmployee" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Avatar</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" name="avatar" class="file-upload-default">
+                                        <div class="input-group col-xs-12">
+                                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Avatar">
+                                            <span class="input-group-append">
+                                                <button class="file-upload-browse btn-sm btn-primary" type="button">Upload</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Gender</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="gender">
+                                            <option value="0">Male</option>
+                                            <option value="1">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Date of Birth</label>
+                                    <div class="col-sm-9">
+                                        <input type="date" class="form-control" name="dob" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" name="email" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control" name="phone" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="address" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Educational Qualification</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="eduQualifi" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Employee Code</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="employeeCode" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Grade</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="grade" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Department</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="serviceId">
+                                            <option>Select Department</option>
+                                            <option>abc</option>
+                                            <option>123</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Role of Employee</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="roleId">
+                                            <option>Select Department</option>
+                                            <option>abc</option>
+                                            <option>123</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 50px;">
+                            <div class="form-group">
+                                <label>Achievements</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Status</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="status">
+                                            <option>Active</option>
+                                            <option>Waitting</option>
+                                            <option>Busy</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Employee login account</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="username" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="reset" class="btn btn-warning btn-icon-text">
+                                    <i class="ti-reload btn-icon-prepend"></i>
+                                    Reset
+                                </button>>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
