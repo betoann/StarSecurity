@@ -1,4 +1,4 @@
-﻿namespace StarSecurity.Models
+﻿namespace Api_StarSecurity.Models
 {
     public class EmployeeModel
     {
@@ -17,6 +17,5 @@
         public string? Grade { get; set; }
         public string? Achievements { get; set; }
         public int Status { get; set; }
-        public string Username { get; set; }
     }
 }
