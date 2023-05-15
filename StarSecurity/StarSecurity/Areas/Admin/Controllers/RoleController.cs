@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace StarSecurity.Areas.Admin.Controllers
 {
@@ -9,7 +8,7 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public IActionResult ListRole()
         {
-            return View();
+            return Ok();
         }
 
         public IActionResult AddRole()

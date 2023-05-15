@@ -1,4 +1,4 @@
-﻿namespace StarSecurity.Models
+﻿namespace Api_StarSecurity.Models
 {
     public class EmployeeModel
     {

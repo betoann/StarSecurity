@@ -1,4 +1,5 @@
 using System.Text;
+using Api_StarSecurity.Entites;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -6,7 +7,15 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllers();
+
+builder.Services.AddDbContext<StarSecurityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConn")));
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(opt =>
 {
@@ -28,38 +37,17 @@ builder.Services.AddAuthentication(opt =>
 
 var app = builder.Build();
 
-
-
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
-);
-
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=HomeAdmin}/{action=Index}/{id?}"
-);
-
-app.MapAreaControllerRoute(
-    name: "Admin",
-    areaName: "Admin",
-    pattern: "Admin/{controller=HomeAdmin}/{action=Index}/{id?}"
-);
-
+app.MapControllers();
 
 app.Run();
