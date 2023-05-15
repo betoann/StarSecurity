@@ -1,0 +1,309 @@
+﻿.logo-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 0 70px;
+    padding: 50px 0;
+}
+
+    .logo-wrapper p {
+        font-size: 20px;
+    }
+
+        .logo-wrapper p:first-child {
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+
+.nav-wrapper {
+    display: flex;
+    padding: 15px 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .nav-wrapper a {
+        color: #000;
+    }
+
+    .nav-wrapper nav ul {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+        padding-inline-start: 0;
+    }
+
+    .nav-wrapper p {
+        margin-bottom: 0;
+    }
+
+    .nav-wrapper nav ul li {
+        text-decoration: none;
+        list-style: none;
+        margin: 0 10px;
+    }
+
+.nav-wrapper {
+    background-color: rgb(180, 171, 163);
+}
+
+.contact-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+    .contact-wrapper .phone {
+        margin: 0 10px;
+    }
+
+.hero-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-height: 500px;
+    overflow-y: hidden;
+}
+
+    .hero-content .image {
+        /* The image used */
+        background-image: url("../image/788538d7a33e40f0ac693a9a73251180.webp");
+        /* Set a specific height */
+        min-height: 500px;
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .hero-content .content {
+        background-color: #000;
+        position: relative;
+    }
+
+    .hero-content .wrapper p {
+        font-size: 18px;
+    }
+
+    .hero-content .wrapper h3 {
+        font-size: 46px;
+        color: rgb(180, 171, 163);
+    }
+
+    .hero-content .wrapper {
+        color: #fff;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .hero-content .text {
+        margin-bottom: 30px;
+    }
+
+    .hero-content a {
+        padding: 15px 20px;
+        border: 1px solid #fff;
+        color: #fff;
+    }
+
+.scroll-image-wrapper {
+    position: relative;
+}
+
+    .scroll-image-wrapper .content p {
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    .scroll-image-wrapper .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 30px 70px;
+        background-color: #fff;
+        font-size: 30px;
+        text-transform: uppercase;
+    }
+
+    .scroll-image-wrapper .image {
+        /* The image used */
+        background-image: url("../image/087044_ccedd60fa49e45b58badc89f7cb3bfb0~mv2.webp");
+        /* Set a specific height */
+        min-height: 600px;
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+.about-content {
+    padding: 70px 0;
+    text-align: center;
+    background-color: rgb(180, 171, 163);
+}
+
+    .about-content p {
+        margin-bottom: 30px;
+    }
+
+    .about-content a {
+        color: #000;
+        padding: 10px 20px;
+        border: 1px solid #000;
+    }
+
+.news-item img {
+    width: 100%;
+}
+
+.news-wrapper {
+    padding: 70px 0;
+}
+
+
+.news-item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.news-content .title {
+    font-size: 20px;
+}
+
+.news-content .link {
+    margin-top: 30px;
+}
+
+    .news-content .link a {
+        padding: 15px 20px;
+        color: #000;
+        border: 1px solid #000;
+    }
+
+.testimonial-wrapper {
+    background-color: #000;
+}
+
+.testimonial img {
+    width: 100%;
+}
+
+.testimonial {
+    padding: 70px 0;
+}
+
+    .testimonial .contentss {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        background-color: rgb(180, 171, 163);
+    }
+
+
+    .testimonial .content {
+        text-align: center;
+        place-self: center;
+        padding: 0px 50px;
+        position: relative;
+    }
+
+.footer-wrapper {
+    background-color: rgb(180, 171, 163);
+    padding: 70px 0;
+}
+
+    .footer-wrapper .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-wrapper input:focus {
+        outline: none;
+    }
+
+::placeholder {
+    color: #000;
+}
+
+.footer-wrapper form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+    .footer-wrapper form div.name {
+        float: left;
+    }
+
+    .footer-wrapper form div.phone {
+        float: right;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .footer-wrapper form div.phone {
+        width: 48%;
+    }
+
+    .footer-wrapper form div.name {
+        width: 50%;
+    }
+
+.footer-wrapper input {
+    margin-bottom: 10px;
+    background-color: transparent;
+    border-bottom: 1px solid #000;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    color: #000;
+    height: 40px;
+    width: 100%;
+}
+
+.footer-wrapper textarea:focus {
+    outline: none;
+}
+
+.footer-wrapper textarea {
+    background-color: transparent;
+    border-bottom: 1px solid #000;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+
+.footer-wrapper input.submit {
+    border-bottom: none;
+}
+
+.footer-wrapper select:focus {
+    outline: none;
+}
+
+.footer-wrapper select {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #000;
+}
+
+select option {
+    color: #000;
+}
+
+.news-wrapper > .title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}

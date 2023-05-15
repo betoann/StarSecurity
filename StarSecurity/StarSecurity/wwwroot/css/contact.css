@@ -1,0 +1,25 @@
+﻿.footer-wrapper {
+    background-color: #000;
+}
+
+.footer-wrapper {
+    color: #fff;
+}
+
+    .footer-wrapper select {
+        color: #fff;
+    }
+
+    .footer-wrapper input,
+    .footer-wrapper textarea,
+    .footer-wrapper select {
+        border-bottom: 1px solid #fff;
+    }
+
+::placeholder {
+    color: #fff;
+}
+
+input.submit {
+    color: #fff;
+}
