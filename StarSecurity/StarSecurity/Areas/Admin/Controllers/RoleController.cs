@@ -8,7 +8,7 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public IActionResult ListRole()
         {
-            return Ok();
+            return View();
         }
 
         public IActionResult AddRole()
