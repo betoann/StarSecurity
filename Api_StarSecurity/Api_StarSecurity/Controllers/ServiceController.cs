@@ -38,6 +38,7 @@ namespace Api_StarSecurity.Controllers
            var data = new Service
            {
                Name = model.Name,
+               Image = model.Image,
                Description = model.Description
            };
 
@@ -55,6 +56,7 @@ namespace Api_StarSecurity.Controllers
            if (data == null) return NotFound();
 
            data.Name = model.Name;
+           data.Image = model.Image;
            data.Description = model.Description;
            data.UpdatedDate = DateTime.Now;
 

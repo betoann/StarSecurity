@@ -1,5 +1,6 @@
 ﻿using Api_StarSecurity.Entites;
 using Api_StarSecurity.Models;
+using Api_StarSecurity.Models.Filter;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Task = Api_StarSecurity.Entites.Task;
@@ -14,9 +15,9 @@ namespace Api_StarSecurity.Controllers
         }
 
         [HttpGet("List")]
-        public IActionResult GetList()
+        public IActionResult GetList([FromQuery] TaskFilter model)
         {
-            var res = _context.Tasks;
+            var res = _context.Tasks.Where(m => m.Status == model.Status || model.Status == 0);
 
             return Ok(res);
         }
@@ -44,6 +45,7 @@ namespace Api_StarSecurity.Controllers
             {
                 EmployeeId = model.EmployeeId,
                 ClientId = model.ClientId,
+                ServiceId = model.ServiceId,
                 Description = model.Description,
                 Status = model.Status
             };
@@ -69,6 +71,7 @@ namespace Api_StarSecurity.Controllers
 
             data.EmployeeId = model.EmployeeId;
             data.ClientId = model.ClientId;
+            data.ServiceId = model.ServiceId;
             data.Description = model.Description;
             data.Status = model.Status;
 

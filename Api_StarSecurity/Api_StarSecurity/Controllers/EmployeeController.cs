@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security.Principal;
 using Api_StarSecurity.Entites;
 using Api_StarSecurity.Models;
+using Api_StarSecurity.Models.Filter;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StarSecurity.Common;
@@ -20,9 +21,10 @@ namespace Api_StarSecurity.Controllers
         }
 
         [HttpGet("List")]
-        public IActionResult GetList()
+        public IActionResult GetList([FromQuery] EmployeeFilter model)
         {
-            var res = _context.Employees;
+            var res = _context.Employees.Where(m => (m.Status == model.Status || model.Status == 1)
+                                                &&(m.Name.ToLower().Contains(model.Name.ToLower()) || model.Name == ""));
 
             return Ok(res);
         }

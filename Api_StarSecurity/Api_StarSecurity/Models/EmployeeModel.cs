@@ -16,6 +16,6 @@
         public long RoleId { get; set; }
         public string? Grade { get; set; }
         public string? Achievements { get; set; }
-        public int Status { get; set; }
+        public int Status { get; set; } = 1;
     }
 }

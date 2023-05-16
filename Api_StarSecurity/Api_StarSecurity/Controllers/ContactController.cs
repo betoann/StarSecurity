@@ -3,21 +3,20 @@ using Api_StarSecurity.Models;
 using Api_StarSecurity.Models.Filter;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StarSecurity.Common;
 
 namespace Api_StarSecurity.Controllers
 {
-    public class ClientController : BaseController<ClientController>
+    public class ContactController : BaseController<ContactController>
     {
-        public ClientController(StarSecurityContext context, ILogger<ClientController> logger, IConfiguration config)
+        public ContactController(StarSecurityContext context, ILogger<ContactController> logger, IConfiguration config)
             : base(context, logger, config)
         {
         }
 
         [HttpGet("List")]
-        public IActionResult GetList([FromQuery] ClientFilter model)
+        public IActionResult GetList([FromQuery] ContactFilter model)
         {
-            var res = _context.Clients.Where(m => m.Name.ToLower().Contains(model.Name.ToLower()) || model.Name == "");
+            var res = _context.Contacts.Where(m => m.Status == model.Status || model.Status == 0);
 
             return Ok(res);
         }
@@ -25,7 +24,7 @@ namespace Api_StarSecurity.Controllers
         [HttpGet("Detail")]
         public IActionResult Details([FromQuery] long id)
         {
-            var res = _context.Clients.Find(id);
+            var res = _context.Contacts.Find(id);
 
             if (res == null) return NotFound("No data found");
 
@@ -34,20 +33,19 @@ namespace Api_StarSecurity.Controllers
 
 
         [HttpPost("Add")]
-        public IActionResult Add([FromQuery] ClientModel model)
+        public IActionResult Add([FromQuery] ContactModel model)
         {
-            var data = new Client
+            var data = new Contact
             {
                 Name = model.Name,
-                Gender = model.Gender,
-                Dob = model.Dob,
                 Email = model.Email,
                 Phone = model.Phone,
                 Address = model.Address,
-                Description = model.Description,
+                Message = model.Message,
+                Status = model.Status,
             };
 
-            _context.Clients.Add(data);
+            _context.Contacts.Add(data);
             var roweff = _context.SaveChanges();
 
             return roweff > 0 ? Ok("Success") : BadRequest("Failed");
@@ -55,23 +53,21 @@ namespace Api_StarSecurity.Controllers
 
 
         [HttpPut("Edit")]
-        public IActionResult Edit([FromQuery] ClientModel model)
+        public IActionResult Edit([FromQuery] ContactModel model)
         {
-            var data = _context.Clients.Find(model.Id);
+            var data = _context.Contacts.Find(model.Id);
             if (data == null) return NotFound();
 
             if (data == null) return NotFound();
 
             data.Name = model.Name;
-            data.Gender = model.Gender;
-            data.Dob = model.Dob;
             data.Email = model.Email;
             data.Phone = model.Phone;
             data.Address = model.Address;
-            data.Description = model.Description;
-            data.UpdatedDate = DateTime.Now;
+            data.Message = model.Message;
+            data.Status = model.Status;
 
-            _context.Clients.Update(data);
+            _context.Contacts.Update(data);
             var roweff = _context.SaveChanges();
 
             return roweff > 0 ? Ok("Success") : BadRequest("Failed");
@@ -80,10 +76,10 @@ namespace Api_StarSecurity.Controllers
         [HttpDelete("Delete")]
         public IActionResult Delete([FromQuery] long id)
         {
-            var data = _context.Clients.Find(id);
+            var data = _context.Contacts.Find(id);
             if (data == null) return NotFound("No data found");
 
-            _context.Clients.Remove(data);
+            _context.Contacts.Remove(data);
             var roweff = _context.SaveChanges();
 
             return roweff > 0 ? Ok("Success") : BadRequest("Failed");
