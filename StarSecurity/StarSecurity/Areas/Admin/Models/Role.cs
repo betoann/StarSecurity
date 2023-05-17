@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Api_StarSecurity.Entites
+namespace Api_StarSecurity.Models
 {
-    public partial class Account
+    public partial class Role
     {
+        public Role()
+        {
+            Employees = new HashSet<Employee>();
+        }
+
         public long Id { get; set; }
-        public string? Salt { get; set; }
-        public string? Username { get; set; }
-        public string? Password { get; set; }
-        public long? EmployeeId { get; set; }
+        public string Name { get; set; }
         public string? CreateBy { get; set; }
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public string? UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
 
-        public virtual Employee? Employee { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

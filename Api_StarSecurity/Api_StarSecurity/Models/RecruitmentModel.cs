@@ -6,7 +6,8 @@
         public string Vacancies { get; set; }
         public long Count { get; set; }
         public long ServiceId { get; set; }
+        public string Image { get; set; }
         public string Description { get; set; }
-        public int? Status { get; set; }
+        public int? Status { get; set; } = 1;
     }
 }

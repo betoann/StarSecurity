@@ -83,7 +83,7 @@ namespace Api_StarSecurity.Entites
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Dob)
                     .HasColumnType("date")
@@ -135,7 +135,7 @@ namespace Api_StarSecurity.Entites
             {
                 entity.ToTable("Employee");
 
-                entity.Property(e => e.Achievements).HasMaxLength(500);
+                entity.Property(e => e.Achievements).HasColumnType("text");
 
                 entity.Property(e => e.Address).HasMaxLength(500);
 
@@ -186,14 +186,14 @@ namespace Api_StarSecurity.Entites
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Employees)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Employee_Role");
 
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.Employees)
                     .HasForeignKey(d => d.ServiceId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_Employee_Department");
+                    .HasConstraintName("FK_Employee_Service");
             });
 
             modelBuilder.Entity<Recruitment>(entity =>
@@ -207,6 +207,10 @@ namespace Api_StarSecurity.Entites
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasColumnType("text");
+
+                entity.Property(e => e.Image)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UpdateBy)
                     .HasMaxLength(50)
@@ -254,7 +258,11 @@ namespace Api_StarSecurity.Entites
 
                 entity.Property(e => e.Description).HasColumnType("text");
 
-                entity.Property(e => e.Name).HasMaxLength(200);
+                entity.Property(e => e.Image)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name).HasMaxLength(100);
 
                 entity.Property(e => e.UpdateBy)
                     .HasMaxLength(50)
@@ -273,7 +281,7 @@ namespace Api_StarSecurity.Entites
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.UpdateBy)
                     .HasMaxLength(50)
@@ -290,6 +298,11 @@ namespace Api_StarSecurity.Entites
                     .WithMany(p => p.Tasks)
                     .HasForeignKey(d => d.EmployeeId)
                     .HasConstraintName("FK_Task_Employee");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.Tasks)
+                    .HasForeignKey(d => d.ServiceId)
+                    .HasConstraintName("FK_Task_Service");
             });
 
             OnModelCreatingPartial(modelBuilder);

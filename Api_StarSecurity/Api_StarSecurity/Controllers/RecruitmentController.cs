@@ -1,5 +1,6 @@
 ﻿using Api_StarSecurity.Entites;
 using Api_StarSecurity.Models;
+using Api_StarSecurity.Models.Filter;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +14,9 @@ namespace Api_StarSecurity.Controllers
         }
 
         [HttpGet("List")]
-        public IActionResult GetList()
+        public IActionResult GetList([FromQuery] RecruitmentFilter model)
         {
-            var res = _context.Recruitments;
+            var res = _context.Recruitments.Where(m => m.Status == model.Status || model.Status == 1);
 
             return Ok(res);
         }
@@ -34,7 +35,7 @@ namespace Api_StarSecurity.Controllers
         [HttpPost("Add")]
         public IActionResult Add([FromQuery] RecruitmentModel model)
         {
-            var dataDepartment = _context.Clients.Find(model.ServiceId);
+            var dataDepartment = _context.Services.Find(model.ServiceId);
             if (dataDepartment == null) return NotFound();
 
             var data = new Recruitment
@@ -43,6 +44,7 @@ namespace Api_StarSecurity.Controllers
                 Count = model.Count,
                 Description = model.Description,
                 ServiceId = model.ServiceId,
+                Image = model.Image,
                 Status = model.Status,
             };
 
@@ -59,13 +61,14 @@ namespace Api_StarSecurity.Controllers
             var data = _context.Recruitments.Find(model.Id);
             if (data == null) return NotFound();
 
-            var dataDepartment = _context.Clients.Find(model.ServiceId);
+            var dataDepartment = _context.Services.Find(model.ServiceId);
             if (dataDepartment == null) return NotFound();
 
             data.Vacancies = model.Vacancies;
             data.Count = model.Count;
             data.Description = model.Description;
             data.ServiceId = model.ServiceId;
+            data.Image = model.Image;
             data.Status = model.Status;
             data.UpdatedDate = DateTime.Now;
 

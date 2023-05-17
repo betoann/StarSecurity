@@ -141,8 +141,8 @@
                         </div>
                         <div class="row" style="margin-bottom: 50px;">
                             <div class="form-group">
-                                <label>Achievements</label>
-                                <input type="text" class="form-control" required>
+                                <label for="achievements">Achievements</label>
+                                <textarea name="achievements" class="form-control" id="achievements" required></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -181,3 +181,8 @@
     </div>
 </div>
 
+@section ckeditorJS{
+    <script>
+        CKEDITOR.replace("achievements");
+    </script>
+}

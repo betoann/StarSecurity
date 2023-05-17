@@ -32,6 +32,11 @@ namespace StarSecurity.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult AddAcount()
+        {
+            return View();
+        }
+
         public IActionResult DeleteEmployee()
         {
             return View();
