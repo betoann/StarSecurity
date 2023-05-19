@@ -1,34 +1,44 @@
 using System.Text;
+using StarSecurity.Entites;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Task = System.Threading.Tasks.Task;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthentication(opt =>
-{
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(opt =>
-{
-    opt.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Authen:Secret"])),
-        ValidateLifetime = true
+builder.Services.AddDbContext<StarSecurityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbConn")));
 
-    };
-});
+
+//builder.Services.Configure<CookiePolicyOptions>(options =>
+//    { options.CheckConsentNeeded = context => true;
+//        options.MinimumSameSitePolicy = SameSiteMode.None;
+//    });
+
+builder.Services.AddAuthentication("SecurityScheme")
+    .AddCookie("SecurityScheme", options =>
+    {
+        options.Cookie = new CookieBuilder
+        {
+            HttpOnly = true,
+            Name = ".aspNetCore.StarSecurity.Cookie",
+            Path = "/",
+            SameSite = SameSiteMode.Lax,
+            SecurePolicy = CookieSecurePolicy.SameAsRequest
+        };
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+        options.LoginPath = new PathString("/Admin/HomeAdmin/Login");
+        options.ReturnUrlParameter = "";
+        options.SlidingExpiration = true;
+    });
 
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -43,7 +53,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseCookiePolicy();
+
 
 app.MapControllerRoute(
     name: "default",

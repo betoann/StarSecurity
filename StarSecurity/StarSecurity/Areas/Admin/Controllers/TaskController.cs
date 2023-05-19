@@ -1,35 +1,199 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using StarSecurity.Entites;
+using StaffAssign = StarSecurity.Entites.Task;
 
 namespace StarSecurity.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class TaskController : Controller
     {
+        private readonly StarSecurityContext _context;
 
-        public IActionResult ListTask()
+        public TaskController(StarSecurityContext context)
         {
+            _context = context;
+        }
+
+        public async Task<IActionResult> ListTask(int status)
+        {
+            var res = await _context.Tasks.Where(m => status == 0 || m.Status == status).ToListAsync();
+            return View(res);
+        }
+
+        public async Task<IActionResult> DetailTask(long id)
+        {
+            if (id == null || _context.Tasks == null)
+            {
+                return NotFound();
+            }
+            var res = await _context.Tasks
+                 .FirstOrDefaultAsync(m => m.Id == id);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            return View(res);
+        }
+
+        public async Task<IActionResult> AddTask()
+        {
+            var employee = await _context.Employees.ToListAsync();
+            ViewBag.Employee = new SelectList(employee, "Id", "Name");
+
+            var client = await _context.Clients.ToListAsync();
+            ViewBag.Client = new SelectList(client, "Id", "Name");
+
+            var service = await _context.Services.ToListAsync();
+            ViewBag.Service = new SelectList(service, "Id", "Name");
             return View();
         }
 
-        public IActionResult DetailTask()
+        [HttpPost]
+        public async Task<IActionResult> AddTask(StaffAssign task)
         {
-            return View();
+            var employee = await _context.Employees.ToListAsync();
+            ViewBag.Employee = new SelectList(employee, "Id", "Name");
+
+            var client = await _context.Clients.ToListAsync();
+            ViewBag.Client = new SelectList(client, "Id", "Name");
+
+            var service = await _context.Services.ToListAsync();
+            ViewBag.Service = new SelectList(service, "Id", "Name");
+
+            try
+            {
+                if (!EmployeeExists(task.EmployeeId))
+                {
+                    ViewBag.error = "Employee name does not exists";
+                    return View(task);
+                }
+                if (!ClientExists(task.ClientId))
+                {
+                    ViewBag.error = "Client name does not exists";
+                    return View(task);
+                }
+                if (!ServiceExists(task.ServiceId))
+                {
+                    ViewBag.error = "Service name does not exists";
+                    return View(task);
+                }
+                _context.Tasks.Add(task);
+                await _context.SaveChangesAsync();
+
+                return Redirect(nameof(ListTask));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return View(task);
         }
 
-        public IActionResult AddTask()
+        public async Task<IActionResult> EditTask(long id)
         {
-            return View();
+            var employee = await _context.Employees.ToListAsync();
+            ViewBag.Employee = new SelectList(employee, "Id", "Name");
+
+            var client = await _context.Clients.ToListAsync();
+            ViewBag.Client = new SelectList(client, "Id", "Name");
+
+            var service = await _context.Services.ToListAsync();
+            ViewBag.Service = new SelectList(service, "Id", "Name");
+
+            if (id == null || _context.Tasks == null)
+            {
+                return NotFound();
+            }
+
+            var task = await _context.Tasks.FindAsync(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return View(task);
         }
 
-        public IActionResult EditTask()
+        [HttpPost]
+        public async Task<IActionResult> EditTask(long id, StaffAssign task)
         {
-            return View();
+            var employee = await _context.Employees.ToListAsync();
+            ViewBag.Employee = new SelectList(employee, "Id", "Name");
+
+            var client = await _context.Clients.ToListAsync();
+            ViewBag.Client = new SelectList(client, "Id", "Name");
+
+            var service = await _context.Services.ToListAsync();
+            ViewBag.Service = new SelectList(service, "Id", "Name");
+
+            if (id != task.Id)
+            {
+                return NotFound();
+            }
+            try
+            {
+                if (!EmployeeExists(task.EmployeeId))
+                {
+                    ViewBag.error = "Employee name does not exists";
+                    return View(task);
+                }
+                if (!ClientExists(task.ClientId))
+                {
+                    ViewBag.error = "Client name does not exists";
+                    return View(task);
+                }
+                if (!ServiceExists(task.ServiceId))
+                {
+                    ViewBag.error = "Service name does not exists";
+                    return View(task);
+                }
+
+                _context.Tasks.Update(task);
+                await _context.SaveChangesAsync();
+
+                return Redirect(nameof(ListTask));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+            
+            return View(task);
         }
 
-        public IActionResult DeleteTask()
+        public async Task<IActionResult> DeleteTask(long id)
         {
-            return View();
+            if (_context.Tasks == null)
+            {
+                return Problem("Task is null");
+            }
+            var task = await _context.Tasks.FindAsync(id);
+            if (task != null)
+            {
+                _context.Tasks.Remove(task);
+            }
+
+            await _context.SaveChangesAsync();
+            return Redirect(nameof(ListTask));
+        }
+
+        private bool EmployeeExists(long id)
+        {
+            return _context.Employees.Any(e => e.Id == id);
+        }
+
+        private bool ClientExists(long id)
+        {
+            return _context.Clients.Any(e => e.Id == id);
+        }
+
+        private bool ServiceExists(long id)
+        {
+            return _context.Services.Any(e => e.Id == id);
         }
     }
 }

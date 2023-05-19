@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.Recruitment
 @{
     ViewData["Title"] = "AddRecruitment";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,49 +10,46 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Add Recruitment</h4>
-                    @*<p class="card-description">
-                    Basic form layout
-                    </p>*@
-                    <form action="AddRecruitment" class="forms-sample" method="post">
+                    <form action="AddRecruitment" class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label for="vacancies">Vacancies</label>
-                            <input type="text" class="form-control" id="vacancies" placeholder="Vacancies" required>
+                            <label asp-for="Vacancies">Vacancies</label>
+                            <input asp-for="Vacancies" type="text" class="form-control" placeholder="Vacancies">
+                            <span asp-validation-for="Vacancies" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="count">Count</label>
-                            <input type="number" class="form-control" id="count" placeholder="Count" required>
+                            <label asp-for="Count">Count</label>
+                            <input asp-for="Count" type="number" class="form-control" placeholder="Count">
+                            <span asp-validation-for="Count" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="department">Department</label>
-                            <select class="form-control" id="department">
-                                <option value="1">Manned guarding</option>
-                                <option value="2">.....</option>
-                                <option value="3">..1224...</option>
-                            </select>
+                            <label asp-for="Summary">Summary</label>
+                            <input asp-for="Summary" type="text" class="form-control" placeholder="Summary" >
+                            <span asp-validation-for="Summary" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label class="">Image</label>
-                            <div class="">
-                                <input type="file" name="imgae" class="file-upload-default">
-                                <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                                    <span class="input-group-append">
-                                        <button class="file-upload-browse btn-sm btn-primary" type="button">Upload</button>
-                                    </span>
-                                </div>
-                            </div>
+                            <label asp-for="ServiceId">Department</label>
+                            <select asp-for="ServiceId" class="form-control" asp-items="@ViewBag.Service"></select>
+                            <span asp-validation-for="ServiceId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea name="description" class="form-control" id="description" required></textarea>
+                            <label asp-for="Image">Image</label>
+                            <input asp-for="Image" type="file" name="fileImage" class="form-control file-upload-info">
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description">Description</label>
+                            <textarea asp-for="Description" class="form-control" id="description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         
                         <div class="form-group">
-                            <label for="Status">Status</label>
-                            <select class="form-control" id="Status">
+                            <label asp-for="Status">Status</label>
+                            <select asp-for="Status" class="form-control">
                                 <option value="1">Recruiting</option>
-                                <option value="0">Stop</option>
+                                <option value="2">Stop</option>
                             </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="ti-file btn-icon-prepend"></i>
@@ -71,3 +68,8 @@
         CKEDITOR.replace("description");
     </script>
 }
+    @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

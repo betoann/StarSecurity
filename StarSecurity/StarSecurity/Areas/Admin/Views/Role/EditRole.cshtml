@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.Role
 @{
     ViewData["Title"] = "EditRole";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,13 +10,14 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Edit Role</h4>
-                    @*<p class="card-description">
-                    Basic form layout
-                    </p>*@
                     <form action="EditRole" class="forms-sample" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
                         <div class="form-group">
-                            <label for="nameRole">Name of Role</label>
-                            <input type="text" class="form-control" id="nameRole" placeholder="Name of Role" required>
+                            <label asp-for="Name">Name of Role</label>
+                            <input asp-for="Name" type="text" class="form-control" placeholder="Name of Role">
+                            <span asp-validation-for="Name" class="text-danger">@ViewBag.error</span>
+
                         </div>
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="ti-file btn-icon-prepend"></i>

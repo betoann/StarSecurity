@@ -1,23 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using StarSecurity.Entites;
+using StarSecurity.Models;
 
 namespace StarSecurity.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ContactController : Controller
     {
+        private readonly StarSecurityContext _context;
 
-        public IActionResult ListContact()
+        public ContactController(StarSecurityContext context)
         {
-            return View();
+            _context = context;
         }
 
-        public IActionResult DetailContact()
+        public async Task<IActionResult> ListContact()
         {
-            return View();
+            var res = await _context.Contacts.ToListAsync();
+            return View(res);
         }
 
-        public IActionResult DeleteContact()
+        public async Task<IActionResult> DetailContact(long id)
+        {
+            if (id == null || _context.Contacts == null)
+            {
+                return NotFound();
+            }
+            var res = await _context.Contacts
+                 .FirstOrDefaultAsync(m => m.Id == id);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            return View(res);
+        }
+
+        public async Task<IActionResult> DeleteContact()
         {
             return View();
         }

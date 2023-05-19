@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.Client
 @{
     ViewData["Title"] = "DetailClient";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -9,27 +9,35 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h3>Name: Bui Phuong Mei</h3>
+                    <h3>Name: @Model.Name</h3>
                     <div class="row">
-                        <div class="col-md-6"><h4>Gender: Female</h4></div>
-                        <div class="col-md-6"><h4>Date of birth: 02/0/2003</h4></div>
+                        @if (Model.Gender == "0"){
+                                <div class="col-md-6"><h4>Gender: Male</h4></div>
+                        }
+                        else{
+                                <div class="col-md-6"><h4>Gender: Female</h4></div>
+                        }
+                        <div class="col-md-6"><h4>Date of birth: @Model.Dob</h4></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6"><h4>Email: <a href="mailto:meibp@gmail.com">meibp@gmail.com</a></h4></div>
-                        <div class="col-md-6"><h4>Phone: <a href="tel:01234567899">01234567899</a></h4></div>
+                        <div class="col-md-6"><h4>Email: <a href="mailto:@Model.Email">@Model.Email</a></h4></div>
+                        <div class="col-md-6"><h4>Phone: <a href="tel:@Model.Phone">@Model.Phone</a></h4></div>
                     </div>
-                    <h4>Address: Korea</h4>
+                    <h4>Address: @Model.Address</h4>
                     <br />
                     <div>
                         <h4>Description:</h4>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Pharetra sit amet aliquam id. Metus vulputate eu scelerisque felis imperdiet. Ullamcorper dignissim cras tincidunt lobortis.
-                        Velit ut tortor pretium viverra suspendisse potenti nullam ac. Proin nibh nisl condimentum id venenatis a condimentum vitae.
-                        Etiam erat velit scelerisque in. Morbi tristique senectus et netus et malesuada. Cras semper auctor neque vitae tempus quam.
-                        Posuere urna nec tincidunt praesent semper feugiat nibh sed. Non sodales neque sodales ut etiam sit amet nisl purus.
-                        Eleifend mi in nulla posuere sollicitudin aliquam. Consequat nisl vel pretium lectus quam id. Placerat duis ultricies lacus sed.
-                        Elementum curabitur vitae nunc sed velit dignissim sodales. Tellus in hac habitasse platea dictumst vestibulum rhoncus est pellentesque.
-                        Fames ac turpis egestas integer eget aliquet nibh praesent tristique.
+                        <blockquote class="blockquote">
+                            @Html.Raw(@Model.Description)
+                        </blockquote>
+                    </div>
+
+                    <div>
+                        <a href="~/Admin/Client/EditClient?id=@Model.Id" class="btn btn-dark btn-icon-text">
+                            Edit
+                            <i class="ti-file btn-icon-append"></i>
+                        </a>
+                        <a href="~/Admin/Client/ListClient" class="btn btn-danger btn-icon-text">Back to list</a>
                     </div>
                 </div>
             </div>

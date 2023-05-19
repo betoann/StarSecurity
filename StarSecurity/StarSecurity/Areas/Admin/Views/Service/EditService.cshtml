@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.Service
 @{
     ViewData["Title"] = "EditService";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,36 +10,36 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Edit Service</h4>
-                    @*<p class="card-description">
-                    Basic form layout
-                    </p>*@
-                    <form action="EditService" class="forms-sample" method="post">
+                    <form action="EditService" class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
                         <div class="form-group">
-                            <label for="nameService">Name of Service</label>
-                            <input type="text" class="form-control" id="nameService" placeholder="Name of Service" required>
+                            <label asp-for="Name">Name of Service</label>
+                            <input asp-for="Name" type="text" class="form-control" placeholder="Name of Service">
+                            <span asp-validation-for="Name" class="text-danger">@ViewBag.error</span>
                         </div>
                         <div class="form-group">
-                            <label class="">Image</label>
-                            <div class="">
-                                <input type="file" name="imgae" class="file-upload-default">
-                                <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                                    <span class="input-group-append">
-                                        <button class="file-upload-browse btn-sm btn-primary" type="button">Upload</button>
-                                    </span>
-                                </div>
-                            </div>
+                            <label asp-for="Image">Image</label>
+                            <input asp-for="Image" type="file" name="fileImage" class="form-control file-upload-info">
+                            <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea name="description" class="form-control" id="description" required></textarea>
+                            <label asp-for="Summary">Summary</label>
+                            <input asp-for="Summary" type="text" class="form-control" placeholder="Summary">
+                            <span asp-validation-for="Summary" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="Status">Status</label>
-                            <select class="form-control" id="Status">
+                            <label asp-for="Description">Description</label>
+                            <textarea asp-for="Description" name="description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Status">Status</label>
+                            <select asp-for="Status" class="form-control">
                                 <option value="1">Active</option>
-                                <option value="0">Temporarily stop working</option>
+                                <option value="2">Temporarily stop working</option>
                             </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="ti-file btn-icon-prepend"></i>
@@ -61,3 +61,8 @@
         CKEDITOR.replace("description");
     </script>
 }
+    @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

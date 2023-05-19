@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.Employee
 @{
     ViewData["Title"] = "AddEmployee";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,30 +10,24 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Add Employee</h4>
-                    <form class="form-sample">
-                        @*<p class="card-description">
-                            Personal info
-                        </p>*@
+                    <form action="AddEmployee" class="form-sample" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Name of Employee</label>
+                                    <label asp-for="Name" class="col-sm-3 col-form-label">Name of Employee</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="nameEmployee" required/>
+                                        <input asp-for="Name" type="text" class="form-control"/>
+                                        <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class ="col-sm-3 col-form-label">Avatar</label>
+                                    <label asp-for="Avatar" class="col-sm-3 col-form-label">Avatar</label>
                                     <div class="col-sm-9">
-                                        <input type="file" name="avatar" class="file-upload-default">
-                                        <div class="input-group col-xs-12">
-                                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Avatar">
-                                            <span class="input-group-append">
-                                                <button class="file-upload-browse btn-sm btn-primary" type="button">Upload</button>
-                                            </span>
-                                        </div>
+                                        <input asp-for="Avatar" type="file" name="fileAvatar" class="form-control file-upload-info">
+                                        <span asp-validation-for="Avatar" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -41,38 +35,22 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Gender</label>
+                                    <label asp-for="Gender" class="col-sm-3 col-form-label">Gender</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="gender">
+                                        <select asp-for="Gender" class="form-control">
                                             <option value="0">Male</option>
                                             <option value="1">Female</option>
                                         </select>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Date of Birth</label>
+                                    <label asp-for="Dob" class="col-sm-3 col-form-label">Date of Birth</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control" name="dob"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control" name="email" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Phone</label>
-                                    <div class="col-sm-9">
-                                        <input type="tel" class="form-control" name="phone" />
+                                        <input asp-for="Dob" type="date" class="form-control"/>
+                                        <span asp-validation-for="Dob" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -80,35 +58,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Address</label>
+                                    <label asp-for="Email" class="col-sm-3 col-form-label">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="address"/>
+                                        <input asp-for="Email" type="email" class="form-control"/>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Educational Qualification</label>
+                                    <label asp-for="Phone" class="col-sm-3 col-form-label">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="eduQualifi" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Employee Code</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="employeeCode"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Grade</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="grade"/>
+                                        <input asp-for="Phone" type="text" class="form-control"/>
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -116,64 +78,87 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Department</label>
+                                    <label asp-for="Address" class="col-sm-3 col-form-label">Address</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="serviceId">
+                                        <input asp-for="Address" type="text" class="form-control"/>
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="EduQualifi" class="col-sm-3 col-form-label">Educational Qualification</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="EduQualifi" type="text" class="form-control"/>
+                                        <span asp-validation-for="EduQualifi" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="EmployeeCode" class="col-sm-3 col-form-label">Employee Code</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="EmployeeCode" type="text" class="form-control"/>
+                                        <span asp-validation-for="EmployeeCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="Grade" class="col-sm-3 col-form-label">Grade</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Grade" type="text" class="form-control"/>
+                                        <span asp-validation-for="Grade" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="ServiceId" class="col-sm-3 col-form-label">Department</label>
+                                    <div class="col-sm-9">
+                                        <select asp-for="ServiceId" class="form-control" asp-items="ViewBag.Service">
                                             <option>Select Department</option>
-                                            <option>abc</option>
-                                            <option>123</option>
                                         </select>
+                                        <span asp-validation-for="ServiceId" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Role of Employee</label>
+                                    <label asp-for="RoleId" class="col-sm-3 col-form-label">Role of Employee</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="roleId">
-                                            <option>Select Department</option>
-                                            <option>abc</option>
-                                            <option>123</option>
+                                        <select asp-for="RoleId" class="form-control" asp-items="ViewBag.Role">
+                                            <option value="">Select Role</option>
                                         </select>
+                                        <span asp-validation-for="RoleId" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 50px;">
                             <div class="form-group">
-                                <label for="achievements">Achievements</label>
-                                <textarea name="achievements" class="form-control" id="achievements" required></textarea>
+                                <label asp-for="Achievements">Achievements</label>
+                                <textarea asp-for="Achievements" name="achievements" class="form-control" id="achievements"></textarea>
+                                <span asp-validation-for="Achievements" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Status</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" name="status">
-                                            <option>Active</option>
-                                            <option>Waitting</option>
-                                            <option>Busy</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Employee login account</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="username" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="ti-file btn-icon-prepend"></i>
-                                    Save
-                                </button>
-                                <a href="~/Admin/Employee/ListEmployee" class="btn btn-light">Cancel</a>
-                            </div>
+                        <div class="form-group ">
+                            <label asp-for="Status">Status</label>
+                            <select asp-for="Status" class="form-control">
+                                <option value="1">Active</option>
+                                <option value="2">Waitting</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
                         </div>
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="ti-file btn-icon-prepend"></i>
+                            Save
+                        </button>
+                        <a href="~/Admin/Employee/ListEmployee" class="btn btn-light">Cancel</a>
                     </form>
                 </div>
             </div>
@@ -183,6 +168,11 @@
 
 @section ckeditorJS{
     <script>
-        CKEDITOR.replace("achievements");
-    </script>
+        CKEDITOR.replace("description");
+     </script>
 }
+    @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

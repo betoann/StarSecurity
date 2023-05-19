@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.Role
 @{
     ViewData["Title"] = "AddRole";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,19 +10,18 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Add new Role</h4>
-                    @*<p class="card-description">
-                    Basic form layout
-                    </p>*@
                     <form action="AddRole" class="forms-sample" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label for="nameRole">Name of Role</label>
-                            <input type="text" class="form-control" id="nameRole" placeholder="Name of Role" required>
+                            <label asp-for="Name">Name of Role</label>
+                            <input asp-for="Name" type="text" class="form-control" placeholder="Name of Role">
+                            <span asp-validation-for="Name" class="text-danger">@ViewBag.error</span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="ti-file btn-icon-prepend"></i>
                             Save
                         </button>
-                        <a href="~/Admin/Role/Index" class="btn btn-light">Cancel</a>
+                        <a href="~/Admin/Role/ListRole" class="btn btn-light">Cancel</a>
                     </form>
                 </div>
             </div>
@@ -30,3 +29,8 @@
     </div>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -1,35 +1,116 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using StarSecurity.Entites;
 
 namespace StarSecurity.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ClientController : Controller
     {
+        private readonly StarSecurityContext _context;
 
-        public IActionResult ListClient()
+        public ClientController(StarSecurityContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IActionResult> ListClient(string name)
+        {
+            var res = await _context.Clients.Where(m => string.IsNullOrEmpty(name) || m.Name.ToLower().Contains(name.ToLower())).ToListAsync();
+            return View(res);
+        }
+
+        public async Task<IActionResult> DetailClient(long id)
+        {
+            if (id == null || _context.Clients == null)
+            {
+                return NotFound();
+            }
+            var res = await _context.Clients
+                 .FirstOrDefaultAsync(m => m.Id == id);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            return View(res);
+        }
+
+        public async Task<IActionResult> AddClient()
         {
             return View();
         }
 
-        public IActionResult DetailClient()
+        [HttpPost]
+        public async Task<IActionResult> AddClient(Client client)
         {
-            return View();
+            try
+            {
+                _context.Clients.Add(client);
+                await _context.SaveChangesAsync();
+                return Redirect(nameof(ListClient));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return View(client);
         }
 
-        public IActionResult AddClient()
+        public async Task<IActionResult> EditClient(long id)
         {
-            return View();
+            if (id == null || _context.Clients == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _context.Clients.FindAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            return View(client);
         }
 
-        public IActionResult EditClient()
+        [HttpPost]
+        public async Task<IActionResult> EditClient(long id, Client client)
         {
-            return View();
+            if (id != client.Id)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Clients.Update(client);
+                await _context.SaveChangesAsync();
+                return Redirect(nameof(ListClient));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return View(client);
         }
 
-        public IActionResult DeleteClient()
+        public async Task<IActionResult> DeleteClient(long id)
         {
-            return View();
+            if (_context.Clients == null)
+            {
+                return Problem("Client is null");
+            }
+            var client = await _context.Clients.FindAsync(id);
+            if (client != null)
+            {
+                _context.Clients.Remove(client);
+            }
+
+            await _context.SaveChangesAsync();
+            return Redirect(nameof(ListClient));
         }
     }
 }

@@ -25,8 +25,16 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\upload\employee\" />
+    <Folder Include="wwwroot\upload\recruitment\" />
     <Folder Include="wwwroot\admin\css\" />
     <Folder Include="wwwroot\admin\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\upload\service\cash_service.jpg" />
+    <None Include="wwwroot\upload\service\electronic_security_systems.jpg" />
+    <None Include="wwwroot\upload\service\manned_guarding.jpg" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.EmployeeDetail
 @{
     ViewData["Title"] = "DetailEmployee";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -11,34 +11,42 @@
                 <div class="card-body">
                     <div class="my-profile row">
                         <div class="col-lg-3 left">
+
                             <div class="avatar">
-                                <img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" alt="Avatar" />
+                                <img src="~/upload/employee/@Model.Employee.Avatar" alt="Avatar" />
                             </div>
                             <div class="my-info text-center">
-                                <h2>Nguyen Dang Toan</h2>
-                                <p>12/02/2003</p>
-                                <p>Male</p>
-                                <p>Cau Giay - Ha Noi - Viet Nam</p>
+                                <h2>@Model.Employee.Name</h2>
+                                <p>@Model.Employee.Dob</p>
+                                @if (Model.Employee.Gender == "0")
+                                {
+                                    <p>Male</p>
+                                }
+                                else
+                                {
+                                    <p>Female</p>
+                                }
+                                <p>@Model.Employee.Address</p>
                             </div>
                         </div>
                         <div class="col-lg-9 right">
-                            <div>Employee Code: <span>ABC123</span></div>
-                            <div>Educational Qualification: <span>Dai hoc</span></div>
+                            <div>Employee Code: <span>@Model.Employee.EmployeeCode</span></div>
+                            <div>Educational Qualification: <span>@Model.Employee.EduQualifi</span></div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    Email: <span><a href="mailto:toannd23@gmail.com">toannd23@gmail.com</a></span>
+                                    Email: <span><a href="mailto:@Model.Employee.Email">@Model.Employee.Email</a></span>
                                 </div>
                                 <div class="col-md-6">
-                                    Phone: <span><a href="tel:037123456">037123456</a></span>
+                                    Phone: <span><a href="tel:@Model.Employee.Phone">@Model.Employee.Phone</a></span>
                                 </div>
                             </div>
-                            <div>Grade: <span>hmmmm</span></div>
+                            <div>Grade: <span>@Model.Employee.Grade</span></div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    Dempartment: <span>abc</span>
+                                    Dempartment: <span>@Model.Employee.ServiceId</span>
                                 </div>
                                 <div class="col-md-6">
-                                    Role: <span>admin</span>
+                                    Role: <span>@Model.Employee.RoleId</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -46,14 +54,10 @@
                                     Achievements:
                                 </div>
                                 <div class="col-md-9">
-                                    <ul>
-                                        <li>pumpum</li>
-                                        <li>pumpum</li>
-                                        <li>pumpum</li>
-                                    </ul>
+                                    @Model.Employee.Achievements
                                 </div>
                             </div>
-                            @*<div>Status: <span class="badge badge-success">Active</span></div>*@
+                            @*<div>Status: <span class="badge badge-success">@Model.Status</span></div>*@
                             <div class="row">
                                 <h4>Task:</h4>
                                 <div class="table-responsive">
@@ -67,24 +71,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Bui Phuong Mai</td>
-                                                <td>05/10/2023</td>
-                                                <td><label class="badge badge-success">Processed</label></td>
-                                                <td>qwertyuiop</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nguyen Asd</td>
-                                                <td>05/10/2023</td>
-                                                <td><label class="badge badge-success">Processed</label></td>
-                                                <td>qwertyuiop</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bui Phuong Mei</td>
-                                                <td>05/10/2023</td>
-                                                <td><label class="badge badge-danger">Waitting</label></td>
-                                                <td>qwertyuiop</td>
-                                            </tr>
+                                            @foreach(var item in Model.Tasks){
+                                                <tr>
+                                                    <td>@item.ClientId</td>
+                                                    <td>@item.CreatedDate</td>
+                                                    <td>
+                                                        @if (item.Status == 1){
+                                                            <label class="badge badge-danger">Waitting</label>
+                                                        }else {
+                                                            <label class="badge badge-success">Processed</label>
+                                                        }
+                                                    </td>
+                                                    <td>@Html.Raw(item.Description)</td>
+                                                </tr>
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

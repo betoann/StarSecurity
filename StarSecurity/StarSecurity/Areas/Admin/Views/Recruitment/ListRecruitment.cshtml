@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<StarSecurity.Entites.Recruitment>
 @{
     ViewData["Title"] = "Recruitment";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,20 +10,18 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">List Recruitment</h4>
-                    <form action="" class="form-sample" method="post">
+                    <form action="" class="form-sample" method="get">
                         <div class="row">
                             <div class="form-group col-md-2">
-                                <select class="form-control">
-                                    <option>Status</option>
-                                    <option>Recruiting</option>
-                                    <option>Stop</option>
+                                <select class="form-control" name="status">
+                                    <option value="0">Status</option>
+                                    <option value="1">Recruiting</option>
+                                    <option value="2">Stopped</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                                <select class="form-control">
-                                    <option>Service</option>
-                                    <option>Manned guarding</option>
-                                    <option>CLose</option>
+                                <select class="form-control" name="serviceId" asp-items="@ViewBag.Service">
+                                    <option value="0">Department</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
@@ -46,28 +44,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (var item in Model)
+                                {
                                 <tr>
-                                    <td>Employee</td>
-                                    <td class="text-danger">99</td>
-                                    <td>Manned guarding</td>
-                                    <td><label class="badge badge-success">Recruiting</label></td>
+                                    <td>@item.Vacancies</td>
+                                    <td class="text-danger">@item.Count</td>
+                                    <td>@item.ServiceId</td>
+                                        @if (@item.Status == 1)
+                                        {
+                                            <td><label class="badge badge-success">Recruiting</label></td>
+                                        }
+                                        else
+                                        {
+                                            <td><label class="badge badge-danger">Stop recruitment</label></td>
+                                        }
+                                    
                                     <td>
-                                        <a href="~/Admin/Recruitment/DetailRecruitment" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a href="~/Admin/Recruitment/EditRecruitment" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="~/Admin/Recruitment/DetailRecruitment?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
+                                            <a href="~/Admin/Recruitment/EditRecruitment?id=@item.Id" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
+                                            <a href="~/Admin/Recruitment/DeleteRecruitment?id=@item.Id" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Protect</td>
-                                    <td class="text-danger">50</td>
-                                    <td>Manned guarding</td>
-                                    <td><label class="badge badge-success">Recruiting</label></td>
-                                    <td>
-                                        <a class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
-                                    </td>
-                                </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

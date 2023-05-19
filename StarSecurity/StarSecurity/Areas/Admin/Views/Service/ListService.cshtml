@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<StarSecurity.Entites.Service>
 @{
     ViewData["Title"] = "Service";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -15,42 +15,32 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Description</th>
+                                    <th>Summary</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Manned guarding</td>
-                                    <td class="">.........</td>
-                                    <td><label class="badge badge-success">Active</label></td>
-                                    <td>
-                                        <a href="~/Admin/Service/DetailService" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a href="~/Admin/Service/EditService" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Cash service</td>
-                                    <td class="">.........</td>
-                                    <td><label class="badge badge-success">Active</label></td>
-                                    <td>
-                                        <a class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Electronic....</td>
-                                    <td class="">.........</td>
-                                    <td><label class="badge badge-success">Active</label></td>
-                                    <td>
-                                        <a class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
-                                    </td>
-                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td class="">@item.Summary</td>
+                                        @if (@item.Status == 1)
+                                        {
+                                            <td><label class="badge badge-success">Active</label></td>
+                                        }
+                                        else
+                                        {
+                                            <td><label class="badge badge-danger">Stop</label></td>
+                                        }
+                                        <td>
+                                            <a href="~/Admin/Service/DetailService?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
+                                            <a href="~/Admin/Service/EditService?id=@item.Id" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
+                                            <a href="~/Admin/Service/DeleteService?id=@item.Id" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

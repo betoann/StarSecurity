@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<StarSecurity.Entites.Contact>
 @{
     ViewData["Title"] = "Contact";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -34,45 +34,34 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Address</th>
-                                    <th>Time</th>
+                                    <th>Time send</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (var item in Model)
+                                {
                                 <tr>
-                                    <td>Nguyen Dang Toan</td>
-                                    <td>toannd23@gmail.com</td>
-                                    <td>HN</td>
-                                    <td>05/10/2023</td>
-                                    <td><label class="badge badge-danger">Unread</label></td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Address</td>
+                                        <td>@item.CreatedDate</td>
+                                        @if (@item.Status == 1)
+                                        {
+                                            <td><label class="badge badge-success">Read</label></td>
+                                        }
+                                        else
+                                        {
+                                            <td><label class="badge badge-danger">Unread</label></td>
+                                        }
+                                    
                                     <td>
-                                        <a href="~/Admin/Contact/DetailContact" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
+                                            <a href="~/Admin/Contact/DetailContact?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
                                         <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Pham Truong Vy Hoang</td>
-                                    <td>hoangptv@gmail.com</td>
-                                    <td>HN</td>
-                                    <td>05/10/2023</td>
-                                    <td><label class="badge badge-success">Readed</label></td>
-                                    <td>
-                                        <a class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Nguyen 123</td>
-                                    <td>n123@gmail.com</td>
-                                    <td>HD</td>
-                                    <td>05/10/2023</td>
-                                    <td><label class="badge badge-success">Readed</label></td>
-                                    <td>
-                                        <a class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
-                                    </td>
-                                </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

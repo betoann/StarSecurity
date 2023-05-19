@@ -1,4 +1,4 @@
-﻿
+﻿@model StarSecurity.Entites.Account
 @{
     ViewData["Title"] = "AddAcount";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,27 +10,25 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Add Account</h4>
-                    @*<p class="card-description">
-                    Basic form layout
-                    </p>*@
-                    <form action="AddAcount" class="forms-sample" method="post">
+                    <form action="AddAcount" class="form-sample" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <span class="text-danger">@ViewBag.error</span>
                         <div class="form-group">
-                            <label for="username">UserName</label>
-                            <input type="text" class="form-control" id="username" placeholder="UserName" required>
+                            <label asp-for="Username">UserName</label>
+                            <input asp-for="Username" class="form-control"/>
+                            <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="password">PassWord</label>
-                            <input type="text" class="form-control" id="password" placeholder="PassWord" required>
+                            <label asp-for="Password">PassWord</label>
+                            <input asp-for="Password" class="form-control" type="password"/>
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label>Name of Employee</label>
-                            <select class="js-example-basic-single w-100">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
-                                <option value="AM">America</option>
-                                <option value="CA">Canada</option>
-                                <option value="RU">Russia</option>
+                            <label asp-for="EmployeeId">Name of Employee</label>
+                            <select asp-for="EmployeeId" asp-items="ViewBag.Employee" class="js-example-basic-multiple w-100">
+                                <option value="">Select Employee</option>
                             </select>
+                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="ti-file btn-icon-prepend"></i>
@@ -44,3 +42,8 @@
     </div>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
