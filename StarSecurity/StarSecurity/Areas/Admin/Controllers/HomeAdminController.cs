@@ -44,13 +44,10 @@ namespace StarSecurity.Areas.Admin.Controllers
 
             var employee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == data.EmployeeId);
             var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == employee.RoleId);
-            var nameRole = role.Name;
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, "Cookie authentication"),
-                new Claim(ClaimTypes.UserData, username),
-                //new Claim(ClaimTypes.Role, nameRole)
+                new Claim(ClaimTypes.Email, employee.Email)
             };
                 
             // create identity
@@ -82,8 +79,13 @@ namespace StarSecurity.Areas.Admin.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.CountEmployee = await _context.Employees.CountAsync();
+            ViewBag.CountClient = await _context.Clients.CountAsync();
+            ViewBag.CountTask = await _context.Tasks.CountAsync(t => t.Status == 1);
+            
+
             return View();
         }
     }

@@ -2,7 +2,6 @@
     ViewData["Title"] = "Home";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 <div class="content-wrapper">
     <div class="row">
         <div class="col-sm-12">
@@ -37,18 +36,18 @@
                                 <div class="statistics-details d-flex align-items-center justify-content-between">
                                     <div>
                                         <p class="statistics-title">Employee</p>
-                                        <h3 class="rate-percentage">10000</h3>
-                                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>2000</span></p>
+                                        <h3 class="rate-percentage">@ViewBag.CountEmployee</h3>
+                                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>...</span></p>
                                     </div>
                                     <div>
                                         <p class="statistics-title">Clients</p>
-                                        <h3 class="rate-percentage">5000</h3>
-                                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>1000</span></p>
+                                        <h3 class="rate-percentage">@ViewBag.CountClient</h3>
+                                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>...</span></p>
                                     </div>
                                     <div>
                                         <p class="statistics-title">Task succeeded</p>
-                                        <h3 class="rate-percentage">4999</h3>
-                                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>1999</span></p>
+                                        <h3 class="rate-percentage">@ViewBag.CountTask</h3>
+                                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>...</span></p>
                                     </div>
                                 </div>
                             </div>

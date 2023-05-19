@@ -12,6 +12,7 @@
                     <h4 class="card-title">Add Employee</h4>
                     <form action="AddEmployee" class="form-sample" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <span class="text-danger">@ViewBag.error</span>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
