@@ -30,7 +30,7 @@ namespace StarSecurity.Entites
         [Required(ErrorMessage = "Department cannot be blank")]
         public long ServiceId { get; set; }
         [Required(ErrorMessage = "Role cannot be blank")]
-        public long RoleId { get; set; }
+        public string RoleCode { get; set; }
         public string? Grade { get; set; }
         public string? Achievements { get; set; }
         public int? Status { get; set; } = 1;
@@ -39,7 +39,7 @@ namespace StarSecurity.Entites
         public string? UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
 
-        public virtual Role? Role { get; set; }
+        public virtual Role? RoleCodeNavigation { get; set; }
         public virtual Service? Service { get; set; }
         public virtual ICollection<Account> Accounts { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }

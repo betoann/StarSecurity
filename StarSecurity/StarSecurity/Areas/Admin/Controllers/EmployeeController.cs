@@ -1,4 +1,5 @@
 ﻿using System.Security.Principal;
+using System.Web.Helpers;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,14 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> ListEmployee(int status, long serviceId, string name)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
             var employee = await _context.Employees.Where(m => (status == 0 || m.Status == status)
                                                     && (serviceId == 0 || m.ServiceId == serviceId)
                                                     && (string.IsNullOrEmpty(name) || m.Name.ToLower().Contains(name.ToLower()))).ToListAsync();
@@ -34,6 +43,14 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> DetailEmployee(long id)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
             if (id == null || _context.Employees == null)
             {
                 return NotFound();
@@ -57,11 +74,24 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> AddEmployee()
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             var service = await _context.Services.ToListAsync();
             ViewBag.Service = new SelectList(service, "Id", "Name");
 
             var role = await _context.Roles.ToListAsync();
-            ViewBag.Role = new SelectList(role, "Id", "Name");
+            ViewBag.Role = new SelectList(role, "RoleCode", "Name");
 
             return View();
         }
@@ -69,11 +99,24 @@ namespace StarSecurity.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmployee(Employee employee, IFormFile fileAvatar)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             var service = await _context.Services.ToListAsync();
             ViewBag.Service = new SelectList(service, "Id", "Name");
 
             var role = await _context.Roles.ToListAsync();
-            ViewBag.Role = new SelectList(role, "Id", "Name");
+            ViewBag.Role = new SelectList(role, "RoleCode", "Name");
 
             try
             {
@@ -83,6 +126,7 @@ namespace StarSecurity.Areas.Admin.Controllers
                     return View(employee);
                 }
 
+                employee.CreateBy = email;
                 _context.Employees.Add(employee);
                 await _context.SaveChangesAsync();
 
@@ -103,11 +147,24 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> EditEmployee(long id)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+
+            }
             var service = await _context.Services.ToListAsync();
             ViewBag.Service = new SelectList(service, "Id", "Name");
 
             var role = await _context.Roles.ToListAsync();
-            ViewBag.Role = new SelectList(role, "Id", "Name");
+            ViewBag.Role = new SelectList(role, "RoleCode", "Name");
 
             if (id == null || _context.Employees == null)
             {
@@ -126,11 +183,24 @@ namespace StarSecurity.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditEmployee(long id,Employee employee, IFormFile fileAvatar)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             var service = await _context.Services.ToListAsync();
             ViewBag.Service = new SelectList(service, "Id", "Name");
 
             var role = await _context.Roles.ToListAsync();
-            ViewBag.Role = new SelectList(role, "Id", "Name");
+            ViewBag.Role = new SelectList(role, "RoleCode", "Name");
 
             if (id != employee.Id)
             {
@@ -139,21 +209,12 @@ namespace StarSecurity.Areas.Admin.Controllers
 
             try
             {
-                if (EmailExists(employee.Email))
-                {
-                    ViewBag.error = "Email exists";
-                    return View(employee);
-                }
-
-                if (fileAvatar == null)
-                {
-                    employee.Avatar = _context.Employees.FirstOrDefault(s => s.Id == id).Avatar;
-                }
-                else
+                if (fileAvatar != null)
                 {
                     employee.Avatar = UploadImg(fileAvatar);
                 }
-                
+                employee.UpdateBy = email;
+                employee.UpdatedDate = DateTime.Now;
                 _context.Employees.Update(employee);
                 await _context.SaveChangesAsync();
 
@@ -179,6 +240,19 @@ namespace StarSecurity.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAcount(Account account)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+
+            }
             var empl = _context.Employees.ToList();
             ViewBag.Employee = new SelectList(empl, "Id", "Name");
 
@@ -216,6 +290,19 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> DeleteEmployee(long id)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             if (_context.Employees == null)
             {
                 return Problem("Employee is null");
@@ -260,6 +347,16 @@ namespace StarSecurity.Areas.Admin.Controllers
         private bool UsernameExists(string username)
         {
             return _context.Accounts.Any(e => e.Username == username);
+        }
+
+        private bool CheckRoleAdmin(string email)
+        {
+            var empl = _context.Employees.SingleOrDefault(e => e.Email == email);
+            if (empl.RoleCode == "RoleAdmin")
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

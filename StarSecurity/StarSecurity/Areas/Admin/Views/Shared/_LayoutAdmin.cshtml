@@ -1,16 +1,4 @@
-﻿@{
-    var email = "";
-    if (User.Identities.Count() > 0)
-    {
-        foreach (var claim in User.Claims)
-        {
-            email = claim.Value;
-        }
-    }
-    ViewBag.email = email;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -60,7 +48,7 @@
             <div class="navbar-menu-wrapper d-flex align-items-top">
                 <ul class="navbar-nav">
                     <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                        <h1 class="welcome-text">Hello, <span class="text-black fw-bold">Nguyen Dang Toan</span></h1>
+                        <h1 class="welcome-text">Hello, <span class="text-black fw-bold">@ViewBag.EmployeeName</span></h1>
                         <h3 class="welcome-sub-text">Your performance summary this week </h3>
                     </li>
                 </ul>
@@ -160,15 +148,15 @@
                     </li>
                     <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="~/admin/images/faces/face8.jpg" alt="Profile image">
+                            <img class="img-xs rounded-circle" src="~/upload/employee/@ViewBag.EmployeeAvatar" alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div class="dropdown-header text-center">
-                                <img class="img-md rounded-circle" src="~/admin/images/faces/face8.jpg" alt="Profile image">
-                                <p class="mb-1 mt-3 font-weight-semibold">Nguyen Dang Toan</p>
-                                <p class="fw-light text-muted mb-0">@ViewBag.email</p>
+                                <img class="img-md rounded-circle" src="~/upload/employee/@ViewBag.EmployeeAvatar" alt="Profile image" width="100px">
+                                <p class="mb-1 mt-3 font-weight-semibold">@ViewBag.EmployeeName</p>
+                                <p class="fw-light text-muted mb-0">@ViewBag.EmployeeEmail</p>
                             </div>
-                            <a class="dropdown-item" href="~/Admin/Employee/DetailEmployee"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+                            <a class="dropdown-item" href="~/Admin/Employee/DetailEmployee?id=@ViewBag.EmployeeId"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
                             <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
                             <a class="dropdown-item" href="~/Admin/HomeAdmin/Logout"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
                         </div>

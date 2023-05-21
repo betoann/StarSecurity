@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
-using System.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StarSecurity.Common;
 using StarSecurity.Entites;
 
@@ -43,7 +43,8 @@ namespace StarSecurity.Areas.Admin.Controllers
             };
 
             var employee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == data.EmployeeId);
-            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == employee.RoleId);
+
+            HttpContext.Response.Cookies.Append("email", employee.Email);
 
             List<Claim> claims = new List<Claim>
             {
@@ -83,8 +84,22 @@ namespace StarSecurity.Areas.Admin.Controllers
         {
             ViewBag.CountEmployee = await _context.Employees.CountAsync();
             ViewBag.CountClient = await _context.Clients.CountAsync();
-            ViewBag.CountTask = await _context.Tasks.CountAsync(t => t.Status == 1);
-            
+            ViewBag.CountTask = await _context.Tasks.CountAsync(t => t.Status == 2);
+
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            return View();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> PageError()
+        {
 
             return View();
         }

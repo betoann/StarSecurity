@@ -50,7 +50,7 @@
                                 <div class="form-group row">
                                     <label asp-for="Dob" class="col-sm-3 col-form-label">Date of Birth</label>
                                     <div class="col-sm-9">
-                                        <input asp-for="Dob" type="date" class="form-control"/>
+                                        <input asp-for="Dob" class="form-control"/>
                                         <span asp-validation-for="Dob" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -130,12 +130,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label asp-for="RoleId" class="col-sm-3 col-form-label">Role of Employee</label>
+                                    <label asp-for="RoleCode" class="col-sm-3 col-form-label">Role of Employee</label>
                                     <div class="col-sm-9">
-                                        <select asp-for="RoleId" class="form-control" asp-items="ViewBag.Role">
+                                        <select asp-for="RoleCode" class="form-control" asp-items="ViewBag.Role">
                                             <option value="">Select Role</option>
                                         </select>
-                                        <span asp-validation-for="RoleId" class="text-danger"></span>
+                                        <span asp-validation-for="RoleCode" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                             <label asp-for="Status">Status</label>
                             <select asp-for="Status" class="form-control">
                                 <option value="1">Active</option>
-                                <option value="2">Waitting</option>
+                                @*<option value="2">Restting</option>*@
                             </select>
                             <span asp-validation-for="Status" class="text-danger"></span>
                         </div>
@@ -169,7 +169,7 @@
 
 @section ckeditorJS{
     <script>
-        CKEDITOR.replace("description");
+        CKEDITOR.replace("achievements");
      </script>
 }
     @section Scripts {

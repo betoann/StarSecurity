@@ -46,7 +46,7 @@
                                     Dempartment: <span>@Model.Employee.ServiceId</span>
                                 </div>
                                 <div class="col-md-6">
-                                    Role: <span>@Model.Employee.RoleId</span>
+                                    Role: <span>@Model.Employee.RoleCode</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -54,7 +54,7 @@
                                     Achievements:
                                 </div>
                                 <div class="col-md-9">
-                                    @Model.Employee.Achievements
+                                    @Html.Raw(Model.Employee.Achievements)
                                 </div>
                             </div>
                             @*<div>Status: <span class="badge badge-success">@Model.Status</span></div>*@

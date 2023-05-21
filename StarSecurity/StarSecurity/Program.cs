@@ -65,6 +65,11 @@ app.MapControllerRoute(
     pattern: "{area:exists}/{controller=HomeAdmin}/{action=Index}/{id?}"
 );
 
+app.MapControllerRoute(
+    name: "PageError",
+    pattern: "Admin/HomeAdmin/PageError"
+);
+
 app.MapAreaControllerRoute(
     name: "Admin",
     areaName: "Admin",
