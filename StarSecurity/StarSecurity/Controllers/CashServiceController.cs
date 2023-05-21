@@ -8,5 +8,13 @@ namespace StarSecurity.Controllers
         {
             return View();
         }
+        public IActionResult ElectronicSecurity()
+        {
+            return View();
+        }
+        public IActionResult MannedGuarding()
+        {
+            return View();
+        }
     }
 }
