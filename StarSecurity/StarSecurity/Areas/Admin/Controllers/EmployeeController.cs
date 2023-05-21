@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Security.Principal;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -76,6 +77,12 @@ namespace StarSecurity.Areas.Admin.Controllers
 
             try
             {
+                if (EmailExists(employee.Email))
+                {
+                    ViewBag.error = "Email exists";
+                    return View(employee);
+                }
+
                 _context.Employees.Add(employee);
                 await _context.SaveChangesAsync();
 
@@ -132,6 +139,12 @@ namespace StarSecurity.Areas.Admin.Controllers
 
             try
             {
+                if (EmailExists(employee.Email))
+                {
+                    ViewBag.error = "Email exists";
+                    return View(employee);
+                }
+
                 if (fileAvatar == null)
                 {
                     employee.Avatar = _context.Employees.FirstOrDefault(s => s.Id == id).Avatar;
@@ -232,6 +245,11 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 throw;
             }
+        }
+
+        private bool EmailExists(string email)
+        {
+            return _context.Employees.Any(e => e.Email == email);
         }
 
         private bool AccountExists(long id)

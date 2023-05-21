@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var email = "";
+    if (User.Identities.Count() > 0)
+    {
+        foreach (var claim in User.Claims)
+        {
+            email = claim.Value;
+        }
+    }
+    ViewBag.email = email;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -154,7 +166,7 @@
                             <div class="dropdown-header text-center">
                                 <img class="img-md rounded-circle" src="~/admin/images/faces/face8.jpg" alt="Profile image">
                                 <p class="mb-1 mt-3 font-weight-semibold">Nguyen Dang Toan</p>
-                                <p class="fw-light text-muted mb-0">toannd23@gmail.com</p>
+                                <p class="fw-light text-muted mb-0">@ViewBag.email</p>
                             </div>
                             <a class="dropdown-item" href="~/Admin/Employee/DetailEmployee"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
                             <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
