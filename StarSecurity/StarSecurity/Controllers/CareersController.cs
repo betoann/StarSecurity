@@ -4,30 +4,29 @@ using StarSecurity.Entites;
 
 namespace StarSecurity.Controllers
 {
-    public class OurbusinessController : Controller
+    public class CareersController : Controller
     {
         private readonly StarSecurityContext _context;
 
-        public OurbusinessController(StarSecurityContext context)
+        public CareersController(StarSecurityContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            var res = await _context.Services.Where(s => s.Status == 1).ToListAsync();
+            var res = await _context.Recruitments.Where(r => r.Status == 1).ToListAsync();
             return View(res);
         }
 
-        public async Task<IActionResult> DetailBusiness(long id)
+        public async Task<IActionResult> Detail(long id)
         {
-            if (id == null || _context.Services == null)
+            if (id == null || _context.Recruitments == null)
             {
                 return NotFound();
             }
-
-            var res = await _context.Services.FirstOrDefaultAsync(m => m.Id == id);
-            if (res == null)
+            var res = await _context.Recruitments.FirstOrDefaultAsync(r => r.Id == id);
+            if(res == null)
             {
                 return NotFound();
             }
