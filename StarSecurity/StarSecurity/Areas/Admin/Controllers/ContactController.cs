@@ -18,7 +18,7 @@ namespace StarSecurity.Areas.Admin.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ListContact()
+        public async Task<IActionResult> ListContact(int status)
         {
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
@@ -28,7 +28,7 @@ namespace StarSecurity.Areas.Admin.Controllers
             ViewBag.EmployeeName = emplView.Name;
             ViewBag.EmployeeId = emplView.Id;
 
-            var res = await _context.Contacts.ToListAsync();
+            var res = await _context.Contacts.Where(c => status == 0 || c.Status == status).ToListAsync();
             return View(res);
         }
 
@@ -53,6 +53,40 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return NotFound();
             }
             return View(res);
+        }
+
+        public async Task<IActionResult> MarkRead(long id)
+        {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
+            try
+            {
+                var contact = await _context.Contacts.FirstOrDefaultAsync(c => c.Id == id);
+                contact.Status = 1;
+                _context.Contacts.Update(contact);
+                await _context.SaveChangesAsync();
+
+
+                await _context.SaveChangesAsync();
+                return Redirect(nameof(ListContact));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return Redirect(nameof(ListContact));
         }
 
         public async Task<IActionResult> DeleteContact(long id)

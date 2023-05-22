@@ -1,67 +1,29 @@
-﻿<div id="ob" class="news-wrapper container">
+﻿@model IEnumerable<StarSecurity.Entites.Service>
+@{
+    ViewData["Title"] = "OurBusiness";
+}
+
+<div id="ob" class="news-wrapper container">
     <div class="title">
         <p>Our Business</p>
     </div>
-    <div class="news-item">
-        <div class="news-image"><img src="~/image/guarding.jpg" alt=""></div>
-        <div class="news-content">
-            <div class="title">
-                <p>MANNED GUARDING</p>
-            </div>
-            <div class="content">
-                <p>
-                    The service portfolio of this division includes
-                    guarding, fire squad, dog squad, bodyguards etc. for industries,
-                    banks, retail outlets, residential colonies, hotels and institutions
-                </p>
-            </div>
-            <div class="link">
-                <a asp-controller="CashService" asp-action="MannedGuarding">More info</a>
-            </div>
-        </div>
-    </div>
-    <div class="news-item">
-        <div class="news-image"><img src="~/image/Cameroon-Cash-780px.jpg" alt=""></div>
-        <div class="news-content">
-            <div class="title">
-                <p> CASH SERVICE</p>
-            </div>
-            <div class="content">
-                <p>
-                    The service range of the Cash Services division
-                    includes secured transfer of cash and valuables, ATM
-                    replenishment, Vaulting and Processing Services, multi-point
-                    cash collection and Caretaker Services
-            </div>
-            <div class="link">
-                <a asp-controller="CashService" asp-action="Index">More info</a>
+    @foreach (var item in Model)
+    {
+        <div class="news-item">
+            <div class="news-image"><img src="~/upload/service/@item.Image" alt="Image"></div>
+            <div class="news-content">
+                <div class="title">
+                    <p>@item.Name</p>
+                </div>
+                <div class="content">
+                    <p>
+                        @item.Summary
+                    </p>
+                </div>
+                <div class="link">
+                    <a asp-controller="CashService" asp-action="MannedGuarding">More info</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="news-item">
-        <div class="news-image">
-            <img src="~/image/surveillance-systems-intrusion-detection-red-hawk-security-systems.jpg"
-                 alt="">
-        </div>
-        <div class="news-content">
-            <div class="title">
-                <p> ELECTRONIC SECURITY SYSTEMS</p>
-            </div>
-            <div class="content">
-                <p>
-                    This division works in close
-                    association with SIS&#39;s strategic partners i.e. reputed system
-                    integrators &amp; installers. The primary area of activity for this
-                    division is design, installation and maintenance of Access control
-                    systems, CCTVs, fire alarm systems, fire suppression systems,
-                    intruder/burglar alarms, perimeter protection systems, etc. The
-                    division aims at marketing its products to the existing customer
-                    base.
-                </p>
-            </div>
-            <div class="link">
-                <a asp-controller="CashService" asp-action="ElectronicSecurity">More info</a>
-            </div>
-        </div>
-    </div>
+    }
 </div>

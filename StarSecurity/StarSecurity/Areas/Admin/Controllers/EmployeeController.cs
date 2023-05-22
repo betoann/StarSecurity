@@ -232,6 +232,20 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> AddAcount()
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+
+            }
+
             var empl = _context.Employees.ToList();
             ViewBag.Employee = new SelectList(empl, "Id", "Name");
             return View();
@@ -253,6 +267,7 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
 
             }
+
             var empl = _context.Employees.ToList();
             ViewBag.Employee = new SelectList(empl, "Id", "Name");
 

@@ -27,7 +27,7 @@
                                         <td>@item.RoleCode</td>
                                         <td>
                                             <a href="~/Admin/Role/EditRole?code=@item.RoleCode" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                            <a href="#" onclick="if(confirm('Xoa?') == true){ location.href = '/Admin/Role/DeleteRole?code=@item.RoleCode' }" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="#" onclick="if(confirm('You definitely delete?') == true){ location.href = '/Admin/Role/DeleteRole?code=@item.RoleCode' }" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
                                         </td>
                                     </tr>
                                 }

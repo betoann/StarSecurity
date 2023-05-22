@@ -1,25 +1,94 @@
-﻿.footer-wrapper {
-    background-color: #000;
+﻿.content-wrapper {
+    background-color: rgb(20,20,20);
+    padding: 70px 0;
 }
 
-.footer-wrapper {
-    color: #fff;
-}
+    .form-wrapper .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-    .footer-wrapper select {
+    .form-wrapper .title {
+        color: rgb(180,171,163);
+    }
+
+    .form-wrapper .address {
+        text-align: center;
+        color: #fff;
+        font-size: 14px;
+        padding-top: 10px;
+    }
+
+    .form-wrapper .address p {
+       margin: 0;
+    }
+
+    .form-wrapper .contact {
         color: #fff;
     }
 
-    .footer-wrapper input,
-    .footer-wrapper textarea,
-    .footer-wrapper select {
-        border-bottom: 1px solid #fff;
+    .form-wrapper input[type=text], .form-wrapper input[type=email], .form-wrapper textarea{
+        color: #fff;
     }
+.form-wrapper input:focus, .form-wrapper button:focus {
+    outline: none;
+}
 
 ::placeholder {
     color: #fff;
 }
 
-input.submit {
+.form-wrapper form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+    .form-wrapper form div.name {
+        float: left;
+    }
+
+    .form-wrapper form div.email {
+        float: right;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .form-wrapper form div.email {
+        width: 48%;
+    }
+
+    .form-wrapper form div.name {
+        width: 50%;
+    }
+
+.form-wrapper input, .form-wrapper button {
+    margin-bottom: 10px;
+    background-color: transparent;
+    border-bottom: 1px solid #fff;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    color: #000;
+    height: 40px;
+    width: 100%;
+}
+
+.form-wrapper textarea:focus {
+    outline: none;
+}
+
+.form-wrapper textarea {
+    background-color: transparent;
+    border-bottom: 1px solid #000;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+
+.form-wrapper button.submit {
+    border-bottom: none;
     color: #fff;
+    margin-top: 20px;
 }
