@@ -19,47 +19,85 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> ListRole()
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
             var res = await _context.Roles.ToListAsync();
             return View(res);
         }
 
         public async Task<IActionResult> AddRole()
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> AddRole(Role role)
         {
-            if (ModelState.IsValid)
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            try
             {
-                try
+                if (RoleNameExists(role.Name))
                 {
-                    if (RoleExists(role.Name))
-                    {
-                        ViewBag.error = "Role name exists";
-                        return View(role);
-                    }
-                    _context.Roles.Add(role);
-                    await _context.SaveChangesAsync();
+                    ViewBag.error = "Role name exists";
+                    return View(role);
                 }
-                catch (DbUpdateConcurrencyException)
+                if (RoleCodeExists(role.RoleCode))
                 {
-                    throw;
+                    ViewBag.error = "Role Code exists";
+                    return View(role);
                 }
+
+                role.CreateBy = email;
+                _context.Roles.Add(role);
+                await _context.SaveChangesAsync();
                 return Redirect(nameof(ListRole));
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+
             return View(role);
         }
 
-        public async Task<IActionResult> EditRole(long id)
+        public async Task<IActionResult> EditRole(string code)
         {
-            if (id == null || _context.Roles == null)
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (code == null || _context.Roles == null)
             {
                 return NotFound();
             }
 
-            var role = await _context.Roles.FindAsync(id);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleCode == code);
             if (role == null)
             {
                 return NotFound();
@@ -68,41 +106,40 @@ namespace StarSecurity.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRole(long id, Role role)
+        public async Task<IActionResult> EditRole(string code, Role role)
         {
-            if (id != role.Id)
-            {
-                return NotFound();
-            }
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
 
-            if (ModelState.IsValid)
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            try
             {
-                try
-                {
-                    if (RoleExists(role.Name))
-                    {
-                        ViewBag.error = "Role name exists";
-                        return View(role);
-                    }
-                    _context.Roles.Update(role);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
+                role.UpdateBy = email;
+                role.UpdatedDate = DateTime.Now;
+                _context.Roles.Update(role);
+                await _context.SaveChangesAsync();
+
                 return Redirect(nameof(ListRole));
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
             return View(role);
         }
 
-        public async Task<IActionResult> DeleteRole(long id)
+        public async Task<IActionResult> DeleteRole(string code)
         {
             if (_context.Roles == null)
             {
                 return Problem("Role is null");
             }
-            var role = await _context.Roles.FindAsync(id);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.RoleCode == code);
             if (role != null)
             {
                 _context.Roles.Remove(role);
@@ -112,9 +149,24 @@ namespace StarSecurity.Areas.Admin.Controllers
             return Redirect(nameof(ListRole));
         }
 
-        private bool RoleExists(string name)
+        private bool RoleNameExists(string name)
         {
             return _context.Roles.Any(e => e.Name == name);
+        }
+
+        private bool RoleCodeExists(string rolecode)
+        {
+            return _context.Roles.Any(e => e.RoleCode == rolecode);
+        }
+
+        private bool CheckRoleAdmin(string email)
+        {
+            var empl = _context.Employees.SingleOrDefault(e => e.Email == email);
+            if (empl.RoleCode == "RoleAdmin")
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

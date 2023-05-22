@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using StarSecurity.Entites;
 
 namespace StarSecurity.Entites
 {
@@ -81,12 +82,12 @@ namespace StarSecurity.Entites
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.CreatedDate).HasColumnType("date");
 
                 entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Dob)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("DOB");
 
                 entity.Property(e => e.Email)
@@ -150,7 +151,7 @@ namespace StarSecurity.Entites
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Dob)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("DOB");
 
                 entity.Property(e => e.EduQualifi).HasMaxLength(200);
@@ -177,22 +178,26 @@ namespace StarSecurity.Entites
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
+                entity.Property(e => e.RoleCode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.UpdateBy)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
-                entity.HasOne(d => d.Role)
+                entity.HasOne(d => d.RoleCodeNavigation)
                     .WithMany(p => p.Employees)
-                    .HasForeignKey(d => d.RoleId)
+                    .HasForeignKey(d => d.RoleCode)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Employee_Role");
 
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.Employees)
                     .HasForeignKey(d => d.ServiceId)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_Employee_Service");
             });
 
@@ -206,13 +211,13 @@ namespace StarSecurity.Entites
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Summary).HasMaxLength(500);
-
                 entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Image)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Summary).HasMaxLength(500);
 
                 entity.Property(e => e.UpdateBy)
                     .HasMaxLength(50)
@@ -231,7 +236,13 @@ namespace StarSecurity.Entites
 
             modelBuilder.Entity<Role>(entity =>
             {
+                entity.HasKey(e => e.RoleCode);
+
                 entity.ToTable("Role");
+
+                entity.Property(e => e.RoleCode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreateBy)
                     .HasMaxLength(50)
@@ -239,7 +250,7 @@ namespace StarSecurity.Entites
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Name).HasMaxLength(50);
 
                 entity.Property(e => e.UpdateBy)
                     .HasMaxLength(50)
@@ -258,8 +269,6 @@ namespace StarSecurity.Entites
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Summary).HasMaxLength(500);
-
                 entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Image)
@@ -267,6 +276,8 @@ namespace StarSecurity.Entites
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name).HasMaxLength(100);
+
+                entity.Property(e => e.Summary).HasMaxLength(500);
 
                 entity.Property(e => e.UpdateBy)
                     .HasMaxLength(50)

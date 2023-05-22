@@ -13,10 +13,10 @@
                     <form action="" class="form-sample" method="post">
                         <div class="row">
                             <div class="form-group col-md-2">
-                                <select class="form-control">
-                                    <option>Status</option>
-                                    <option>Readed</option>
-                                    <option>Unread</option>
+                                <select class="form-control" name="status">
+                                    <option value="0">Status</option>
+                                    <option value="1">Readed</option>
+                                    <option value="2">Unread</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
@@ -58,7 +58,8 @@
                                     
                                     <td>
                                             <a href="~/Admin/Contact/DetailContact?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                        <a class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="~/Admin/Contact/MarkRead?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-bookmark-check"></i></a>
+                                            <a href="#" onclick="if(confirm('You definitely delete?') == true){ location.href = '/Admin/Contact/DeleteContact?id=@item.Id' }" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
                                     </td>
                                 </tr>
                                 }

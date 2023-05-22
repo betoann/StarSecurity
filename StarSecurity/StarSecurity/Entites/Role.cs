@@ -7,9 +7,10 @@ namespace StarSecurity.Entites
 {
     public partial class Role
     {
-        public long Id { get; set; }
         [Required(ErrorMessage = "Name cannot be blank")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Role code cannot be blank")]
+        public string RoleCode { get; set; }
         public string? CreateBy { get; set; }
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public string? UpdateBy { get; set; }

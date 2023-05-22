@@ -2,13 +2,26 @@
 <html lang="en">
 
 <head>
+    <title>StarSecurity - @ViewData["Title"]</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <link rel="stylesheet" href="~/css/style.css">
     <link href="~/css/about.css" rel="stylesheet" />
     <link href="~/css/contact.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+=======
+
+    <link rel="stylesheet" href="~/admin/vendors/feather/feather.css">
+    <link rel="stylesheet" href="~/admin/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/admin/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/admin/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="~/admin/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="~/admin/vendors/css/vendor.bundle.base.css">
+
+    
+>>>>>>> a0efc8fe25a239b8a0b42fcf29890af4e2428566
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -20,17 +33,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+<<<<<<< HEAD
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="~/js/site.js"></script>
+=======
+
+    <link rel="stylesheet" href="~/css/style.css">
+    <link href="~/css/about.css" rel="stylesheet" />
+    <link href="~/css/contact.css" rel="stylesheet" />
+
+    @*<script src="~/js/script.js"></script>*@
+>>>>>>> a0efc8fe25a239b8a0b42fcf29890af4e2428566
     <link rel="shortcut icon" href="~/admin/images/favicon.jpeg" />
-    <title>Document</title>
+
 </head>
 
 <body>
     <div class="header">
         <div class="logo-wrapper">
-            <img src="~/image/black star.webp" alt="">
+            <a asp-controller="Home" asp-action="Index"><img src="~/image/black star.webp" alt=""></a>
             <div class="text">
                 <p>
                     STAR SECURITY INC
@@ -46,16 +68,20 @@
                     <ul>
                         <li><a asp-controller="Home" asp-action="Index">Home</a></</li>
                         <li><a href="~/Admin/HomeAdmin/Login">Employee Login</a></li>
+                        <li><a asp-controller="Ourbusiness" asp-action="Index">Ourbusiness</a></</li>
                         <li><a asp-controller="Contact" asp-action="Index">Contact</a></</li>
                         <li><a asp-controller="About" asp-action="Index">About</a></li>
+<<<<<<< HEAD
                         <li><a asp-controller="Ourbusiness" asp-action="Index">Ourbusiness</a></</li>
                         <li><a asp-controller="Jobs" asp-action="Index">Need a jobs ?</a></</li>
+=======
+>>>>>>> a0efc8fe25a239b8a0b42fcf29890af4e2428566
                     </ul>
                 </nav>
             </div>
             <div class="contact-wrapper">
                 <p>
-                    a@starsecurity.com
+                    starsecurity@gmail.com
                 </p>
                 <div class="phone">
                     <p>PH: 905.855.7827</p>
@@ -63,9 +89,9 @@
                 <div class="socials">
                     <nav>
                         <ul>
-                            <li><a href="#">face</a></li>
-                            <li><a href="#">twitter</a></li>
-                            <li><a href="#">ins</a></li>
+                            <li><a href="#"><i class="ti-facebook"></i></a></li>
+                            <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                            <li><a href="#"><i class="ti-linkedin"></i></a></li>
                         </ul>
                     </nav>
                 </div>
@@ -79,44 +105,45 @@
 
 
     <div class="footer-wrapper">
-        <div class="container">
-            <div class="address-contact">
-                <h2 class="title">
-                    WE WANT TO HEAR FROM YOU
-                </h2>
-                <div class="address">
-                    <p>HEAD OFFICE</p>
-                    <p> 504 Main St E</p>
-                    <p> Hamilton, ON Canada</p>
-                </div>
-                <div class="contact">
-                    <p class="mail">@@starsecurity.com</p>
-                    <p class="phone">PH: 905.855.7827</p>
-                </div>
+        <div>
+            <h4>STAR SECURITY INC</h4>
+        </div>
+
+        <div>
+            <div><p>starsecurity@gmail.com</p></div>
+            <div>
+                PH: 905.855.7827    FX: 905.855.0800
             </div>
-            <div class="form">
-                <form action="" method="post">
-                    <div class="name">
-                        <input type="text" class="name" placeholder="Name *">
-                    </div>
-                    <div class="phone">
-                        <input type="phone" class="phone" placeholder="Phone *">
-                    </div>
-                    <div>
-                        <select name="address" id="address">
-                            <option value="0">Address</option>
-                            <option value="1">2</option>
-                            <option value="2">3</option>
-                            <option value="3">4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <input type="text" class="subject" placeholder="Subject *">
-                    </div>
-                    <textarea name="message" id="" cols="30" rows="5" placeholder="Message"></textarea>
-                </form>
-                <input type="submit" class="submit" value="Send">
-            </div>
+        </div>
+
+        <div class="address">
+            <p>HEAD OFFICE</p>
+            <p>504 Main St E</p>
+            <p>Hamilton, ON Canada</p>
+        </div>
+        <div class="address">
+            <p>TORONTO OFFICE</p>
+            <p>1101 Queen St W</p>
+            <p>Toronto, ON Canada</p>
+        </div>
+        <div class="address">
+            <p>LONDON OFFICE</p>
+            <p>717-05 Richmond St</p>
+            <p>London, ON Canada</p>
+        </div>
+
+        <div class="socials">
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="ti-facebook"></i></a></li>
+                    <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                    <li><a href="#"><i class="ti-linkedin"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div>
+            <h6>STAR SECURITY  © 2019 ALL RIGHTS RESERVED <a>PRIVACY POLICY</a></h6>
         </div>
     </div>
 </body>

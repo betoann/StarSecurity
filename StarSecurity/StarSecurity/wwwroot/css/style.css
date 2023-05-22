@@ -1,4 +1,9 @@
-﻿.logo-wrapper {
+﻿li {
+    text-decoration: none;
+    list-style: none;
+}
+
+.logo-wrapper {
     display: flex;
     align-items: center;
     margin: 0 70px;
@@ -211,94 +216,6 @@
         position: relative;
     }
 
-.footer-wrapper {
-    background-color: rgb(180, 171, 163);
-    padding: 70px 0;
-}
-
-    .footer-wrapper .container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .footer-wrapper input:focus {
-        outline: none;
-    }
-
-::placeholder {
-    color: #000;
-}
-
-.footer-wrapper form {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-    .footer-wrapper form div.name {
-        float: left;
-    }
-
-    .footer-wrapper form div.phone {
-        float: right;
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .footer-wrapper form div.phone {
-        width: 48%;
-    }
-
-    .footer-wrapper form div.name {
-        width: 50%;
-    }
-
-.footer-wrapper input {
-    margin-bottom: 10px;
-    background-color: transparent;
-    border-bottom: 1px solid #000;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    color: #000;
-    height: 40px;
-    width: 100%;
-}
-
-.footer-wrapper textarea:focus {
-    outline: none;
-}
-
-.footer-wrapper textarea {
-    background-color: transparent;
-    border-bottom: 1px solid #000;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-}
-
-.footer-wrapper input.submit {
-    border-bottom: none;
-}
-
-.footer-wrapper select:focus {
-    outline: none;
-}
-
-.footer-wrapper select {
-    width: 100%;
-    height: 40px;
-    background-color: transparent;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid #000;
-}
-
-select option {
-    color: #000;
-}
 
 .news-wrapper > .title {
     font-size: 36px;
@@ -307,3 +224,32 @@ select option {
     margin-bottom: 30px;
     text-transform: uppercase;
 }
+
+
+.footer-wrapper{
+    text-align: center;
+    background-color: #fff;
+    padding: 50px 0 10px;
+}
+.footer-wrapper .address {
+        margin-top: 20px;
+}
+
+.footer-wrapper .address p {
+        margin: 0;
+}
+
+        
+.footer-wrapper .socials ul{
+    padding: 0;
+    margin-top: 20px;
+}
+
+    .footer-wrapper .socials li {
+        display: inline-block;
+        margin: 10px;
+    }
+
+    .footer-wrapper .socials li i {
+        color: #000;
+    }

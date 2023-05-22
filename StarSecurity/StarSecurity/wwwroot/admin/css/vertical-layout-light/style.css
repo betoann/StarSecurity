@@ -10399,6 +10399,13 @@ progress {
   vertical-align: inherit;
 }
 
+    .table > tbody p {
+        width: 500px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
 .table > thead {
   vertical-align: bottom;
 }

@@ -28,7 +28,7 @@
                         </div>
                     </form>
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-dark">
                             <thead>
                                 <tr>
                                     <th>Name of client</th>
@@ -49,17 +49,17 @@
                                         <td>@item.CreatedDate</td>
                                         @if (@item.Status == 1)
                                         {
-                                            <td><label class="badge badge-success">Waitting</label></td>
+                                            <td><label class="badge badge-danger">Waitting</label></td>
                                         }
                                         else if (@item.Status == 2)
                                         {
-                                            <td><label class="badge badge-danger">Processed</label></td>
+                                            <td><label class="badge badge-success">Processed</label></td>
                                         }
                                     
                                     <td>
                                             <a href="~/Admin/Task/DetailTask?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
                                             <a href="~/Admin/Task/EditTask?id=@item.Id" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                            <a href="~/Admin/Task/DeleteTask?id=@item.Id" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="#" onclick="if(confirm('You definitely delete?') == true){ location.href = '/Admin/Task/DeleteTask?id=@item.Id' }" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
                                     </td>
                                 </tr>
                                 }

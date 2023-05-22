@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,14 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> ListRecruitment(int status, long serviceId)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
             var recruit = await _context.Recruitments.ToListAsync();
 
             recruit = await _context.Recruitments.Where(m => (status == 0 || m.Status == status)
@@ -32,6 +41,14 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> DetailRecruitment(long id)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
             if (id == null || _context.Recruitments == null)
             {
                 return NotFound();
@@ -47,6 +64,19 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> AddRecruitment()
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             var service = await _context.Services.ToListAsync();
             ViewBag.Service = new SelectList(service, "Id", "Name");
             return View();
@@ -55,11 +85,30 @@ namespace StarSecurity.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRecruitment(Recruitment recruitment, IFormFile fileImage)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             var service = await _context.Services.ToListAsync();
             ViewBag.Service = new SelectList(service, "Id", "Name");
 
             try
             {
+                if (recruitment.Description == null)
+                {
+                    return View(recruitment);
+                }
+
+                recruitment.CreateBy = email;
                 _context.Recruitments.Add(recruitment);
                 await _context.SaveChangesAsync();
 
@@ -80,6 +129,19 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> EditRecruitment(long id)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             var service = await _context.Services.ToListAsync();
             ViewBag.Service = new SelectList(service, "Id", "Name");
 
@@ -97,8 +159,21 @@ namespace StarSecurity.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecruitment(long id, Recruitment recruitment)
+        public async Task<IActionResult> EditRecruitment(long id, Recruitment recruitment, IFormFile fileImage)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             if (id != recruitment.Id)
             {
                 return NotFound();
@@ -106,6 +181,18 @@ namespace StarSecurity.Areas.Admin.Controllers
 
             try
             {
+                if (recruitment.Description == null)
+                {
+                    return View(recruitment);
+                }
+
+                if (fileImage != null)
+                {
+                    recruitment.Image = UploadImg(fileImage);
+                }
+
+                recruitment.UpdateBy = email;
+                recruitment.UpdatedDate = DateTime.Now;
                 _context.Recruitments.Update(recruitment);
                 await _context.SaveChangesAsync();
 
@@ -121,6 +208,19 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         public async Task<IActionResult> DeleteRecruitment(long id)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             if (_context.Recruitments == null)
             {
                 return Problem("Recruitment is null");
@@ -150,6 +250,16 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 throw;
             }
+        }
+
+        private bool CheckRoleAdmin(string email)
+        {
+            var empl = _context.Employees.SingleOrDefault(e => e.Email == email);
+            if (empl.RoleCode == "RoleAdmin")
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

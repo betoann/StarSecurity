@@ -71,7 +71,7 @@
                                     <td>
                                             <a href="~/Admin/Employee/DetailEmployee?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
                                             <a href="~/Admin/Employee/EditEmployee?id=@item.Id" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-settings "></i></a>
-                                            <a href="~/Admin/Employee/DeleteEmployee?id=@item.Id" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
+                                            <a href="#" onclick="if(confirm('You definitely delete?') == true){ location.href = '/Admin/Employee/DeleteEmployee?id=@item.Id' }" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
                                     </td>
                                 </tr>
                                 }
@@ -83,4 +83,3 @@
         </div>
     </div>
 </div>
-
