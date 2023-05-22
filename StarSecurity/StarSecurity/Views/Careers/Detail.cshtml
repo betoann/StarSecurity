@@ -1,0 +1,25 @@
+﻿@model StarSecurity.Entites.Recruitment
+@{
+    ViewData["Title"] = "Careers with us";
+}
+
+<div class="content-wrapper">
+    <div class="container">
+        <div class="title">
+            <h3>
+                @Model.Title
+            </h3>
+            <h6>
+                Vacancies: @Model.Vacancies
+            </h6>
+            <h6>
+                Count: @Model.Count
+            </h6>
+        </div>
+        <div class="content">
+            <p>
+                @Html.Raw(Model.Description)
+            </p>
+        </div>
+    </div>
+</div>

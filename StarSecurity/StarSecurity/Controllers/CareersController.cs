@@ -16,6 +16,11 @@ namespace StarSecurity.Controllers
         public async Task<IActionResult> Index()
         {
             var res = await _context.Recruitments.Where(r => r.Status == 1).ToListAsync();
+            if (res == null)
+            {
+                ViewBag.error = "There are currently no vacancies available. Please come back later";
+                return View();
+            }
             return View(res);
         }
 

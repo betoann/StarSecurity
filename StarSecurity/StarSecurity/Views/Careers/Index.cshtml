@@ -1,29 +1,36 @@
 ﻿@model IEnumerable<StarSecurity.Entites.Recruitment>
 @{
-    ViewData["Title"] = "OurBusiness";
+    ViewData["Title"] = "Careers with us";
 }
 
 <div id="ob" class="news-wrapper container">
     <div class="title">
         <p>Careers with us</p>
     </div>
-    @foreach (var item in Model)
-    {
-        <div class="news-item">
-            <div class="news-image"><img src="~/upload/service/@item.Image" alt="Image"></div>
-            <div class="news-content">
-                <div class="title">
-                    <p>@item.</p>
-                </div>
-                <div class="content">
+        <h4 style="text-align: center;">@ViewBag.error</h4>
+        @foreach (var item in Model)
+        {
+            <div class="news-item">
+                <div class="news-image"><img src="~/upload/recruitment/@item.Image" alt="Image"></div>
+                <div class="news-content">
+                    <div class="content">
+                        <div class="title">
+                            <p>@item.Title</p>
+                        </div>
+                        <p>
+                            @item.Summary
+                        </p>
+                        <p>
+                        Vacancies: @item.Vacancies
+                        </p>
                     <p>
-                        @item.Summary
+                        Count: @item.Count
                     </p>
-                </div>
-                <div class="link">
-                    <a href="~/Ourbusiness/DetailBusiness?id=@item.Id">More info</a>
+                    </div>
+                    <div class="link">
+                        <a href="~/Careers/Detail?id=@item.Id">More info</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
 </div>

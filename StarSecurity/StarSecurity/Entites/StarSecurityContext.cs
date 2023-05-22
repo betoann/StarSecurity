@@ -225,6 +225,8 @@ namespace StarSecurity.Entites
 
                 entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Title).HasMaxLength(100);
+
                 entity.Property(e => e.Vacancies).HasMaxLength(100);
 
                 entity.HasOne(d => d.Service)

@@ -7,6 +7,8 @@ namespace StarSecurity.Entites
     public partial class Recruitment
     {
         public long Id { get; set; }
+        [Required(ErrorMessage = "Title cannot be blank")]
+        public string Title { get; set; }
         [Required(ErrorMessage = "Vacancies cannot be blank")]
         public string Vacancies { get; set; }
         [Required(ErrorMessage = "Count cannot be blank")]
