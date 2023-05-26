@@ -2,6 +2,9 @@
     text-decoration: none;
     list-style: none;
 }
+img{
+    width: 100%;
+}
 
 .logo-wrapper {
     display: flex;
@@ -47,8 +50,12 @@
         margin: 0 10px;
     }
 
-.nav-wrapper {
-    background-color: rgb(180, 171, 163);
+    .nav-wrapper, .nav-wrapper nav, nav .dropdown-menu, nav .dropdown-item:hover {
+        background-color: rgb(180, 171, 163);
+    }
+
+nav .dropdown-menu{
+    border: none;
 }
 
 .contact-wrapper {
@@ -170,9 +177,6 @@
 
 
 .news-item {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 50px;
     margin-bottom: 50px;
 }
 
@@ -253,3 +257,103 @@
     .footer-wrapper .socials li i {
         color: #000;
     }
+
+
+
+
+.item-careers{
+    padding: 20px;
+    margin-top: 50px;
+    border: 1px solid #000;
+}
+
+.item-careers .submit{
+    float: right;
+}
+
+.item-careers .submit a{
+    padding: 10px 50px;
+    color: #fff;
+    background: red;
+    border-radius: 50px;
+}
+
+
+.form-search{
+    position: relative;
+}
+
+.form-search .btn-submit{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999;
+}
+
+
+.partner {
+    text-align: center;
+    padding: 100px;
+}
+
+.partner .title{
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.partner .img{
+    height: 100px;
+    padding: 20px;
+    border: 1px solid #00ffff;
+    border-radius: 50px;
+}
+
+.partner img {
+    width: 100%;
+}
+
+.partner h6{
+    text-transform: uppercase;
+    padding-top: 20px;
+}
+
+
+h6 {
+    margin-top: 20px;
+}
+
+.form-apply {
+    padding: 50px;
+    background-color: rgb(180, 171, 163);
+}
+
+
+
+.transfer{
+    padding: 100px 0;
+}
+
+
+.swiper {
+    padding: 50px 0 100px;
+}
+
+.swiper-slide {
+    padding: 10px;
+    text-align: center;
+}
+
+.prd-slide .swiper-slide:hover {
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+.prd-slide .title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}

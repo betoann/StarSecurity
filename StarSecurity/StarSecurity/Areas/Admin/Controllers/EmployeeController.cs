@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using StarSecurity.Areas.Admin.Models;
 using StarSecurity.Common;
 using StarSecurity.Entites;
 
@@ -22,7 +23,7 @@ namespace StarSecurity.Areas.Admin.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ListEmployee(int status, long serviceId, string name)
+        public async Task<IActionResult> ListEmployee(int status, long departmentId, string name)
         {
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
@@ -31,13 +32,13 @@ namespace StarSecurity.Areas.Admin.Controllers
             ViewBag.EmployeeAvatar = emplView.Avatar;
             ViewBag.EmployeeName = emplView.Name;
             ViewBag.EmployeeId = emplView.Id;
-
             var employee = await _context.Employees.Where(m => (status == 0 || m.Status == status)
-                                                    && (serviceId == 0 || m.ServiceId == serviceId)
+                                                    && (departmentId == 0 || m.DepartmentId == departmentId)
                                                     && (string.IsNullOrEmpty(name) || m.Name.ToLower().Contains(name.ToLower()))).ToListAsync();
 
-            var service = await _context.Services.ToListAsync();
-            ViewBag.Service = new SelectList(service, "Id", "Name");
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
+
             return View(employee);
         }
 
@@ -61,15 +62,7 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            var tasks = await _context.Tasks.Where(m => m.EmployeeId == id).ToListAsync();
-
-            var viewData = new EmployeeDetail
-            {
-                Employee = res,
-                Tasks = tasks
-            };
-            return View(viewData);
+            return View(res);
         }
 
         public async Task<IActionResult> AddEmployee()
@@ -87,8 +80,8 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
-            var service = await _context.Services.ToListAsync();
-            ViewBag.Service = new SelectList(service, "Id", "Name");
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
 
             var role = await _context.Roles.ToListAsync();
             ViewBag.Role = new SelectList(role, "RoleCode", "Name");
@@ -126,14 +119,23 @@ namespace StarSecurity.Areas.Admin.Controllers
                     return View(employee);
                 }
 
+                if (EmployeeCodeExists(employee.EmployeeCode))
+                {
+                    ViewBag.error = "Email exists";
+                    return View(employee);
+                }
+
                 employee.CreateBy = email;
                 _context.Employees.Add(employee);
                 await _context.SaveChangesAsync();
 
-                int id = int.Parse(_context.Employees.ToList().Last().Id.ToString());
-                Employee epl = _context.Employees.FirstOrDefault(s => s.Id == id);
-                epl.Avatar = UploadImg(fileAvatar);
-                await _context.SaveChangesAsync();
+                if (fileAvatar != null)
+                {
+                    int id = int.Parse(_context.Employees.ToList().Last().Id.ToString());
+                    Employee epl = _context.Employees.FirstOrDefault(s => s.Id == id);
+                    epl.Avatar = UploadImg(fileAvatar);
+                    await _context.SaveChangesAsync();
+                }
 
                 return Redirect(nameof(ListEmployee));
             }
@@ -160,8 +162,14 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
 
             }
-            var service = await _context.Services.ToListAsync();
-            ViewBag.Service = new SelectList(service, "Id", "Name");
+
+            if (emplView.Id == id)
+            {
+                return Redirect(nameof(ListEmployee));
+            }
+
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
 
             var role = await _context.Roles.ToListAsync();
             ViewBag.Role = new SelectList(role, "RoleCode", "Name");
@@ -196,8 +204,13 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
-            var service = await _context.Services.ToListAsync();
-            ViewBag.Service = new SelectList(service, "Id", "Name");
+            if (emplView.Id == id)
+            {
+                return Redirect(nameof(ListEmployee));
+            }
+
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
 
             var role = await _context.Roles.ToListAsync();
             ViewBag.Role = new SelectList(role, "RoleCode", "Name");
@@ -218,8 +231,6 @@ namespace StarSecurity.Areas.Admin.Controllers
                 _context.Employees.Update(employee);
                 await _context.SaveChangesAsync();
 
-                
-                await _context.SaveChangesAsync();
                 return Redirect(nameof(ListEmployee));
             }
             catch (DbUpdateConcurrencyException)
@@ -303,6 +314,46 @@ namespace StarSecurity.Areas.Admin.Controllers
             return View(account);
         }
 
+        public async Task<IActionResult> ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(UpdatePassWord updatepass)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Username == updatepass.Username);
+            if (account == null)
+            {
+                ViewBag.error = "Account does not exists";
+                return View(updatepass);
+            }
+
+            var isValid = account.Username.ValidPassword(account.Salt, updatepass.PasswordOld, account.Password);
+            if (!isValid)
+            {
+                ViewBag.error = "Password incorrect";
+                return View(updatepass);
+            }
+
+            try
+            {
+                account.Password = account.Username.ComputeSha256Hash(account.Salt, updatepass.PasswordNew);
+
+                _context.Accounts.Update(account);
+                await _context.SaveChangesAsync();
+                return Redirect(nameof(ListEmployee));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+           
+
+            return View();
+        }
+
         public async Task<IActionResult> DeleteEmployee(long id)
         {
             var email = HttpContext.Request.Cookies["email"];
@@ -318,10 +369,16 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
+            if (emplView.Id == id)
+            {
+                return Redirect(nameof(ListEmployee));
+            }
+
             if (_context.Employees == null)
             {
                 return Problem("Employee is null");
             }
+
             var empl = await _context.Employees.FindAsync(id);
             if (empl != null)
             {
@@ -338,10 +395,10 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 string FileName = file.FileName;
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + FileName;
-                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload/employee/", FileName);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload/employee/", uniqueFileName);
                 file.CopyTo(new FileStream(imagePath, FileMode.Create));
 
-                return FileName;
+                return uniqueFileName;
             }
             catch (Exception ex)
             {
@@ -352,6 +409,11 @@ namespace StarSecurity.Areas.Admin.Controllers
         private bool EmailExists(string email)
         {
             return _context.Employees.Any(e => e.Email == email);
+        }
+
+        private bool EmployeeCodeExists(string code)
+        {
+            return _context.Employees.Any(e => e.EmployeeCode == code);
         }
 
         private bool AccountExists(long id)

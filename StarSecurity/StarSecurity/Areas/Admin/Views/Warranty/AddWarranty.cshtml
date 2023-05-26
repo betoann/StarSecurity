@@ -1,0 +1,94 @@
+﻿@model StarSecurity.Entites.Warranty
+@{
+    ViewData["Title"] = "AddWarranty";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add Warranty</h4>
+                    <form action="AddWarranty" class="form-sample" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <span class="text-danger">@ViewBag.error</span>
+                        <div class="form-group row">
+                            <label asp-for="Name" class="col-sm-3 col-form-label">Name of Employee</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" type="text" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="Email" class="col-sm-3 col-form-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Email" type="email" class="form-control" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="Phone" class="col-sm-3 col-form-label">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Phone" type="text" class="form-control" />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="Address" class="col-sm-3 col-form-label">Address</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Address" type="text" class="form-control" />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="ProductId" class="col-sm-3 col-form-label">Product</label>
+                            <div class="col-sm-9">
+                                <select asp-for="ProductId" asp-items="ViewBag.Product" class="js-example-basic-multiple w-100">
+                                    <option>Select Product</option>
+                                </select>
+                                <span asp-validation-for="ProductId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 50px;">
+                            <div class="form-group">
+                                <label asp-for="Description">Description</label>
+                                <textarea asp-for="Description" name="description" class="form-control" id="description"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="ti-file btn-icon-prepend"></i>
+                            Save
+                        </button>
+                        <a href="~/Admin/Warranty/ListWarranty" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ckeditorJS{
+    <script>
+        CKEDITOR.replace("description");
+    </script>
+}
+    @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+

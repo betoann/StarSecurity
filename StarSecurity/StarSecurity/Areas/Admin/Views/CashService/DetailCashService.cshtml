@@ -1,0 +1,36 @@
+﻿@model StarSecurity.Entites.CashService
+@{
+    ViewData["Title"] = "DetailCashService";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Name: @Model.Name</h4>
+                    <div class="row">
+                        <div class="col-md-6"><h4>Email: <a href="mailto:@Model.Email">@Model.Email</a></h4></div>
+                        <div class="col-md-6"><h4>Phone: <a href="tel:@Model.Phone">@Model.Phone</a></h4></div>
+                    </div>
+                    <h4>Address: @Model.Address</h4>
+                    <div class="row">
+                        <div class="col-md-6"><h4>Amount: <span class="text-danger">@String.Format("{0:0,00}", Model.Amount) <sup>vnd</sup></span></h4></div>
+                        <div class="col-md-6"><h4>PaymentMethod: @Model.PaymentMethod</h4></div>
+                    </div>
+                    <br />
+                    <h4>Date time: @Model.CreatedDate</h4>
+                    <br />
+                    <div>
+                        <h4>Description:</h4>
+                        <blockquote class="blockquote">
+                            @Model.Description
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

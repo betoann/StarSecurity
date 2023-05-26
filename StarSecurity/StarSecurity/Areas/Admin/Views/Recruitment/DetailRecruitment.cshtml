@@ -11,14 +11,17 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <img src="~/upload/recruitment/@Model.Image" alt="Image" width="500" />
-                        </div>
-                        <div class="col-md-6">
-                            <h3>Vacancies: @Model.Title</h3>
-                            <h3>Vacancies: @Model.Vacancies</h3>
-                            <h3>Count: @Model.Count</h3>
-                            <h3>Department: @Model.ServiceId</h3>
-                            <h4>Summary: @Model.Summary</h4>
+                            <style>
+                                .card-body span{
+                                    color: #F97F51;
+                                }
+                            </style>
+                            <h2>Title: <span>@Model.Title</span> </h2>
+                            <h4>Vacancies: <span>@Model.Vacancies</span></h4>
+                            <h4>Quantity: <span>@Model.Count</span> </h4>
+                            <h5>TimeStart: <span>@Model.TimeStart</span>  - TimeEnd: <span>@Model.TimeEnd</span> </h5>
+                            <h4>Work Location: <span>@Model.Location</span></h4>
+                            <h4>Salary: <span>@Model.Salary</span> </h4>
                         </div>
                     </div>
                     <br />
@@ -26,6 +29,18 @@
                         <h4>Description:</h4>
                         <blockquote class="blockquote">
                             @Html.Raw(Model.Description)
+                        </blockquote>
+                    </div>
+                    <div>
+                        <h4>Request:</h4>
+                        <blockquote class="blockquote">
+                            @Html.Raw(Model.Request)
+                        </blockquote>
+                    </div>
+                    <div>
+                        <h4>Benefit:</h4>
+                        <blockquote class="blockquote">
+                            @Html.Raw(Model.Benefit)
                         </blockquote>
                     </div>
                     <h6>Created By: @Model.CreateBy</h6>

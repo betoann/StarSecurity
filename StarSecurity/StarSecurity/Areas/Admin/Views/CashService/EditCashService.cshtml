@@ -1,0 +1,82 @@
+﻿@model StarSecurity.Entites.CashService
+@{
+    ViewData["Title"] = "EditCashService";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit CashService</h4>
+                    <form action="EditCashService" class="form-sample" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="Name">Name of Employee</label>
+                            <input asp-for="Name" type="text" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="Email" class="col-sm-3 col-form-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Email" type="email" class="form-control" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label asp-for="Phone" class="col-sm-3 col-form-label">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Phone" type="text" class="form-control" />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address">Address</label>
+                            <input asp-for="Address" type="text" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Amount">Amount of  money</label>
+                            <input asp-for="Amount" type="number" class="form-control" />
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description">Description</label>
+                            <textarea asp-for="Description" name="Description" class="form-control" id="description" rows="5"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <input type="hidden" asp-for="PaymentMethod" />
+                        <input type="hidden" asp-for="PaymentId" />
+                        <input type="hidden" asp-for="OrderId" />
+                        <input type="hidden" asp-for="TransactionId" />
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="ti-file btn-icon-prepend"></i>
+                            Save
+                        </button>
+                        <button type="reset" class="btn btn-warning btn-icon-text">
+                            <i class="ti-reload btn-icon-prepend"></i>
+                            Reset
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+

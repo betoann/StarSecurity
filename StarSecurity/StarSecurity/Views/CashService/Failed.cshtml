@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "transfer failed";
+}
+
+
+
+
+<script>
+    $(document).ready(function () {
+        swal({
+            title: "Transfer failed",
+            text: "Please try again",
+            icon: "error",
+            button: "Ok!",
+            dangerMode: true,
+        }).then((ok) => {
+            window.location.href = '/CashService/Transfer';
+        });
+    })
+
+</script>

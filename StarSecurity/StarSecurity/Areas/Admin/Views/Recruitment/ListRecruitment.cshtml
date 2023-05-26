@@ -10,37 +10,14 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">List Recruitment</h4>
-                    <form action="" class="form-sample" method="get">
-                        <div class="row">
-                            <div class="form-group col-md-2">
-                                <select class="form-control" name="status">
-                                    <option value="0">Status</option>
-                                    <option value="1">Recruiting</option>
-                                    <option value="2">Stopped</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <select class="form-control" name="serviceId" asp-items="@ViewBag.Service">
-                                    <option value="0">Department</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <button type="submit" class="btn-sm btn-primary me-2">
-                                    <i class="mdi mdi-filter"></i>
-                                    Filter
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Title</th>
                                     <th>Vacancies</th>
-                                    <th>Count</th>
-                                    <th>Service</th>
-                                    <th>Status</th>
+                                    <th>Quantity</th>
+                                    <th>TimeEnd</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -51,14 +28,13 @@
                                     <td>@item.Title</td>
                                     <td>@item.Vacancies</td>
                                     <td class="text-danger">@item.Count</td>
-                                    <td>@item.ServiceId</td>
-                                        @if (@item.Status == 1)
+                                        @if (item.TimeEnd > DateTime.Now)
                                         {
-                                            <td><label class="badge badge-success">Recruiting</label></td>
+                                            <td><label class="badge badge-success">@item.TimeEnd</label></td>
                                         }
                                         else
                                         {
-                                            <td><label class="badge badge-danger">Stop recruitment</label></td>
+                                            <td><label class="badge badge-danger">@item.TimeEnd</label></td>
                                         }
                                     
                                     <td>

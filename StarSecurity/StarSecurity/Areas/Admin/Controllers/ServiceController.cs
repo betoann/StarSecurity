@@ -1,5 +1,4 @@
-﻿using System.Web.Helpers;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -69,11 +68,15 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 return RedirectToRoute("PageError");
             }
+
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddService(Service service, IFormFile fileImage)
+        public async Task<IActionResult> AddService(Service Service)
         {
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
@@ -88,26 +91,23 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
+
             try
             {
-                if (ServiceExists(service.Name))
+                if (ServiceExists(Service.Name))
                 {
                     ViewBag.error = "Service exists";
-                    return View(service);
+                    return View(Service);
                 }
-                if (service.Description == null)
+                if (Service.Description == null)
                 {
-                    return View(service);
+                    return View(Service);
                 }
 
-                service.CreateBy = email;
-                _context.Services.Add(service);
-                await _context.SaveChangesAsync();
-
-                int id = int.Parse(_context.Services.ToList().Last().Id.ToString());
-
-                Service sev = _context.Services.FirstOrDefault(s => s.Id == id);
-                sev.Image = UploadImg(fileImage);
+                Service.CreateBy = email;
+                _context.Services.Add(Service);
                 await _context.SaveChangesAsync();
 
                 return Redirect(nameof(ListService));
@@ -116,8 +116,8 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 throw;
             }
-            
-            return View(service);
+
+            return View(Service);
         }
 
         public async Task<IActionResult> EditService(long id)
@@ -135,21 +135,24 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
+
             if (id == null || _context.Services == null)
             {
                 return NotFound();
             }
 
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
+            var Service = await _context.Services.FindAsync(id);
+            if (Service == null)
             {
                 return NotFound();
             }
-            return View(service);
+            return View(Service);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditService(long id, Service service, IFormFile fileImage)
+        public async Task<IActionResult> EditService(long id, Service Service)
         {
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
@@ -164,25 +167,24 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
-            if (id != service.Id)
+            if (id != Service.Id)
             {
                 return NotFound();
             }
-            
+
+            var department = await _context.Departments.ToListAsync();
+            ViewBag.Department = new SelectList(department, "Id", "Name");
+
             try
             {
-                if (service.Description == null)
+                if (Service.Description == null)
                 {
-                    return View(service);
-                }
-                if (fileImage != null)
-                {
-                    service.Image = UploadImg(fileImage);
+                    return View(Service);
                 }
 
-                service.UpdateBy = email;
-                service.UpdatedDate = DateTime.Now;
-                _context.Services.Update(service);
+                Service.UpdateBy = email;
+                Service.UpdatedDate = DateTime.Now;
+                _context.Services.Update(Service);
                 await _context.SaveChangesAsync();
 
                 return Redirect(nameof(ListService));
@@ -191,8 +193,8 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 throw;
             }
-            
-            return View(service);
+
+            return View(Service);
         }
 
         public async Task<IActionResult> DeleteService(long id)
@@ -214,10 +216,10 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 return Problem("Service is null");
             }
-            var service = await _context.Services.FindAsync(id);
-            if (service != null)
+            var Service = await _context.Services.FindAsync(id);
+            if (Service != null)
             {
-                _context.Services.Remove(service);
+                _context.Services.Remove(Service);
             }
 
             await _context.SaveChangesAsync();
@@ -226,30 +228,13 @@ namespace StarSecurity.Areas.Admin.Controllers
 
         private bool ServiceExists(string name)
         {
-            return _context.Roles.Any(e => e.Name == name);
-        }
-
-        private string UploadImg(IFormFile file)
-        {
-            try
-            {
-                string FileName = file.FileName;
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + FileName;
-                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload/service/", FileName);
-                file.CopyTo(new FileStream(imagePath, FileMode.Create));
-
-                return FileName;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return _context.Services.Any(e => e.Name == name);
         }
 
         private bool CheckRoleAdmin(string email)
         {
             var empl = _context.Employees.SingleOrDefault(e => e.Email == email);
-            if(empl.RoleCode == "RoleAdmin")
+            if (empl.RoleCode == "RoleAdmin")
             {
                 return true;
             }

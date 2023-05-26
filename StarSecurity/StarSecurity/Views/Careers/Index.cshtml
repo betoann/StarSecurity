@@ -3,34 +3,27 @@
     ViewData["Title"] = "Careers with us";
 }
 
+<img style="width: 100%; opacity: 0.8;" src="~/image/banner_recruitment.jpg" />
 <div id="ob" class="news-wrapper container">
-    <div class="title">
-        <p>Careers with us</p>
-    </div>
-        <h4 style="text-align: center;">@ViewBag.error</h4>
-        @foreach (var item in Model)
-        {
-            <div class="news-item">
-                <div class="news-image"><img src="~/upload/recruitment/@item.Image" alt="Image"></div>
-                <div class="news-content">
-                    <div class="content">
-                        <div class="title">
-                            <p>@item.Title</p>
-                        </div>
-                        <p>
-                            @item.Summary
-                        </p>
-                        <p>
-                        Vacancies: @item.Vacancies
-                        </p>
-                    <p>
-                        Count: @item.Count
-                    </p>
-                    </div>
-                    <div class="link">
-                        <a href="~/Careers/Detail?id=@item.Id">More info</a>
-                    </div>
+    <h4>Search for jobs, positions you want</h4>
+    <form asp-controller="Careers" asp-action="Index" method="get" class="form-search">
+        <div class="form-group">
+            <input type="text" class="inputs form-control rounded" placeholder="What are you looking for?" aria-label="Search" aria-describedby="search-addon" name="s" />
+            <button type="submit" class="btn-submit btn btn-outline-primary">Search</button>
+        </div>
+    </form>
+
+    <div class="row">
+        @foreach(var item in Model){
+        <div class="col-md-6">
+                <div class="item-careers">
+                    <h4>@item.Title</h4>
+                    <h6><i class="mdi mdi-account-circle"></i>@item.Vacancies</h6>
+                    <h6><i class="mdi mdi-map-marker"></i> @item.Location</h6>
+                    <h6><i class="mdi mdi-timer"></i>@item.TimeEnd</h6>
+                    <h5 class="submit"><a href="~/Careers/Detail?id=@item.Id">Detail</a></h5>
                 </div>
-            </div>
+        </div>
         }
+    </div>
 </div>

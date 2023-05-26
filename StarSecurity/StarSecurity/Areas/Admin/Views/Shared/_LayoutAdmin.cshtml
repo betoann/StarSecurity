@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="~/admin/css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="~/admin/images/favicon.jpeg" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 </head>
 <body class="sidebar-dark">
     <div class="container-scroller">
@@ -195,21 +196,33 @@
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link" href="~/Admin/HomeAdmin/Index">
-                            <i class="mdi mdi-grid-large menu-icon"></i>
+                            <i class="mdi mdi-view-dashboard menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item nav-category">Management</li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#departments" aria-expanded="false" aria-controls="departments">
+                            <i class="menu-icon mdi mdi-floor-plan"></i>
+                            <span class="menu-title">Department</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="departments">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Department/ListDepartment">List</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Department/AddDepartment">Add Department</a></li>
+                            </ul>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#services" aria-expanded="false" aria-controls="services">
-                            <i class="menu-icon mdi mdi-floor-plan"></i>
+                            <i class="menu-icon mdi mdi-microsoft"></i>
                             <span class="menu-title">Service</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="services">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="~/Admin/Service/ListService">List</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Service/AddService">Add service</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Service/AddService">Add Service</a></li>
                             </ul>
                         </div>
                     </li>
@@ -236,10 +249,51 @@
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="~/Admin/Recruitment/ListRecruitment">List</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="~/Admin/Recruitment/AddRecruitment">Add vacancies</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Recruitment/ListCandidate">List Candidate</a></li>
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item nav-category">Work</li>
+                    <li class="nav-item nav-category">Electronic security systems</li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#partners" aria-expanded="false" aria-controls="partners">
+                            <i class="menu-icon mdi mdi-account-switch"></i>
+                            <span class="menu-title">Partner company</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="partners">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Partner/ListPartner">List</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Partner/AddPartner">Add partner</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#products" aria-expanded="false" aria-controls="products">
+                            <i class="menu-icon mdi mdi-camera"></i>
+                            <span class="menu-title">Product</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="products">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Product/ListProduct">List</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Product/AddProduct">Add product</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#warrantys" aria-expanded="false" aria-controls="warrantys">
+                            <i class="menu-icon mdi mdi-play-protected-content"></i>
+                            <span class="menu-title">Warranty</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="warrantys">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Warranty/ListWarranty">List</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Warranty/AddWarranty">Add warranty</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-category">Management</li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#employees" aria-expanded="false" aria-controls="employees">
                             <i class="menu-icon mdi mdi-account-star"></i>
@@ -251,39 +305,39 @@
                                 <li class="nav-item"> <a class="nav-link" href="~/Admin/Employee/ListEmployee">List</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="~/Admin/Employee/AddEmployee">Add employee</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="~/Admin/Employee/AddAcount">Add account</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Employee/ResetPassword">Reset PassWord</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#clients" aria-expanded="false" aria-controls="clients">
                             <i class="menu-icon mdi mdi-account-circle-outline"></i>
-                            <span class="menu-title">Client</span>
+                            <span class="menu-title">Manage Client</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="clients">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Client/ListClient">List</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Client/AddClient">Add client</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/ManageClient/ListClient">List</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#tasks" aria-expanded="false" aria-controls="tasks">
-                            <i class="menu-icon mdi mdi-assistant"></i>
-                            <span class="menu-title">Task</span>
+                        <a class="nav-link" data-bs-toggle="collapse" href="#cashservices" aria-expanded="false" aria-controls="cashservices">
+                            <i class="menu-icon mdi mdi-memory"></i>
+                            <span class="menu-title">Cash Service</span>
                             <i class="menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="tasks">
+                        <div class="collapse" id="cashservices">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Task/ListTask">Task list</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="~/Admin/Task/AddTask">Staff assign</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Admin/CashService/ListCashService">List</a></li>
                             </ul>
                         </div>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="~/Admin/Contact/ListContact">
-                            <i class="mdi mdi-contacts menu-icon"></i>
-                            <span class="menu-title">Feddback list</span>
+                            <i class="mdi mdi-assistant menu-icon"></i>
+                            <span class="menu-title">List contact</span>
                         </a>
                     </li>
                 </ul>

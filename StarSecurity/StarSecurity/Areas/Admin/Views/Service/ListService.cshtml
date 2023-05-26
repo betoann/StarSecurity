@@ -15,7 +15,6 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Summary</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
@@ -25,14 +24,13 @@
                                 {
                                     <tr>
                                         <td>@item.Name</td>
-                                        <td class=""><p>@item.Summary</p></td>
                                         @if (@item.Status == 1)
                                         {
-                                            <td><label class="badge badge-success">Active</label></td>
+                                            <td><label class="badge badge-success">Display</label></td>
                                         }
                                         else
                                         {
-                                            <td><label class="badge badge-danger">Stop</label></td>
+                                            <td><label class="badge badge-danger">Hide</label></td>
                                         }
                                         <td>
                                             <a href="~/Admin/Service/DetailService?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>

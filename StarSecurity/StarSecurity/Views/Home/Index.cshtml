@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StarSecurity.Entites.Service>
+﻿@model StarSecurity.Models.HomeViewModel
 @{
     ViewData["Title"] = "Home";
 }
@@ -41,13 +41,13 @@
 </div>
 <div id="ob" class="news-wrapper container">
     <div class="title">
-        <p>Our Business</p>
+        <p>Our Department</p>
     </div>
 
-    @foreach(var item in Model){
-        <div class="news-item">
-            <div class="news-image"><img src="~/upload/service/@item.Image" alt="Image"></div>
-            <div class="news-content">
+    @foreach(var item in Model.departments){
+        <div class="news-item row">
+            <div class="news-image col-md-4"><img src="~/upload/department/@item.Image" alt="Image"></div>
+            <div class="news-content col-md-8">
                 <div class="title">
                     <p>@item.Name</p>
                 </div>
@@ -57,13 +57,48 @@
                     </p>
                 </div>
                 <div class="link">
-                    <a href="~/Ourbusiness/DetailBusiness?id=@item.Id">More info</a>
+                    <a href="~/OurDepartment/DetailDepartment?id=@item.Id">More info</a>
                 </div>
             </div>
         </div>
     }
-
 </div>
+
+<div class="partner">
+    <div class="container">
+        <div class="title">
+            <p>Partners</p>
+        </div>
+        <div class="row">
+            @foreach(var item in Model.partners){
+                <div class="item col-md-2">
+                    <div class="img"><img src="~/upload/partner/@item.Image" alt="Image"></div>
+                    <div><h6>@item.Name</h6></div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="prd-slide">
+    <div class="container">
+        <div class="title">
+            <p>Electronic security system</p>
+        </div>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.products)
+                {
+                    <div class="swiper-slide">
+                        <a href="~/Product/Detail?id=@item.Id"><img src="~/upload//product/@item.Image" /></a>
+                        <h6>@item.Name</h6>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="testimonial-wrapper">
     <div class="container">
         <div class="testimonial">
@@ -82,3 +117,14 @@
         </div>
     </div>
 </div>
+
+
+@section swipper_slide{
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            watchSlidesProgress: true,
+            slidesPerView: 3,
+        });
+    </script>
+}
+

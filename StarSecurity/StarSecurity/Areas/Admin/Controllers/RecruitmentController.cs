@@ -18,7 +18,7 @@ namespace StarSecurity.Areas.Admin.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> ListRecruitment(int status, long serviceId)
+        public async Task<IActionResult> ListRecruitment()
         {
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
@@ -29,12 +29,6 @@ namespace StarSecurity.Areas.Admin.Controllers
             ViewBag.EmployeeId = emplView.Id;
 
             var recruit = await _context.Recruitments.ToListAsync();
-
-            recruit = await _context.Recruitments.Where(m => (status == 0 || m.Status == status)
-                                                                && (serviceId == 0 || m.ServiceId == serviceId)).ToListAsync();
-
-            var service = await _context.Services.ToListAsync();
-            ViewBag.Service = new SelectList(service, "Id", "Name");
 
             return View(recruit);
         }
@@ -83,7 +77,7 @@ namespace StarSecurity.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRecruitment(Recruitment recruitment, IFormFile fileImage)
+        public async Task<IActionResult> AddRecruitment(Recruitment recruitment)
         {
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
@@ -98,23 +92,15 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
-            var service = await _context.Services.ToListAsync();
-            ViewBag.Service = new SelectList(service, "Id", "Name");
-
             try
             {
-                if (recruitment.Description == null)
+                if (recruitment.Description == null || recruitment.Request == null || recruitment.Benefit == null)
                 {
                     return View(recruitment);
                 }
 
                 recruitment.CreateBy = email;
                 _context.Recruitments.Add(recruitment);
-                await _context.SaveChangesAsync();
-
-                int id = int.Parse(_context.Recruitments.ToList().Last().Id.ToString());
-                Recruitment rcm = _context.Recruitments.FirstOrDefault(s => s.Id == id);
-                rcm.Image = UploadImg(fileImage);
                 await _context.SaveChangesAsync();
 
                 return Redirect(nameof(ListRecruitment));
@@ -142,9 +128,6 @@ namespace StarSecurity.Areas.Admin.Controllers
                 return RedirectToRoute("PageError");
             }
 
-            var service = await _context.Services.ToListAsync();
-            ViewBag.Service = new SelectList(service, "Id", "Name");
-
             if (id == null || _context.Recruitments == null)
             {
                 return NotFound();
@@ -159,7 +142,7 @@ namespace StarSecurity.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRecruitment(long id, Recruitment recruitment, IFormFile fileImage)
+        public async Task<IActionResult> EditRecruitment(long id, Recruitment recruitment)
         {
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
@@ -181,14 +164,9 @@ namespace StarSecurity.Areas.Admin.Controllers
 
             try
             {
-                if (recruitment.Description == null)
+                if (recruitment.Description == null || recruitment.Request == null || recruitment.Benefit == null)
                 {
                     return View(recruitment);
-                }
-
-                if (fileImage != null)
-                {
-                    recruitment.Image = UploadImg(fileImage);
                 }
 
                 recruitment.UpdateBy = email;
@@ -235,21 +213,118 @@ namespace StarSecurity.Areas.Admin.Controllers
             return Redirect(nameof(ListRecruitment));
         }
 
-        private string UploadImg(IFormFile file)
+
+        //Candidate
+
+        public async Task<IActionResult> ListCandidate(int status, long serviceId)
         {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
+            var candidate = await _context.Candidates.Where(m => (status == 0 || m.Status == status)).ToListAsync();
+
+            return View(candidate);
+        }
+
+        public async Task<IActionResult> DetailCandidate(long id)
+        {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
+            if (id == null || _context.Candidates == null)
+            {
+                return NotFound();
+            }
+            var res = await _context.Candidates
+                 .FirstOrDefaultAsync(m => m.Id == id);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            return View(res);
+        }
+
+        public async Task<IActionResult> ReadedCandidate(long id)
+        {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
             try
             {
-                string FileName = file.FileName;
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + FileName;
-                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload/recruitment/", FileName);
-                file.CopyTo(new FileStream(imagePath, FileMode.Create));
+                var cdd = await _context.Candidates.FirstOrDefaultAsync(c => c.Id == id);
+                cdd.Status = 1;
+                _context.Candidates.Update(cdd);
+                await _context.SaveChangesAsync();
 
-                return FileName;
+
+                await _context.SaveChangesAsync();
+                return Redirect(nameof(ListCandidate));
             }
-            catch (Exception ex)
+            catch (DbUpdateConcurrencyException)
             {
                 throw;
             }
+
+            return Redirect(nameof(ListCandidate));
+        }
+
+        public async Task<IActionResult> DeleteCandidate(long id)
+        {
+            var email = HttpContext.Request.Cookies["email"];
+            var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
+
+            ViewBag.EmployeeEmail = email;
+            ViewBag.EmployeeAvatar = emplView.Avatar;
+            ViewBag.EmployeeName = emplView.Name;
+            ViewBag.EmployeeId = emplView.Id;
+
+            if (!CheckRoleAdmin(email))
+            {
+                return RedirectToRoute("PageError");
+            }
+
+            if (_context.Recruitments == null)
+            {
+                return Problem("Candidates is null");
+            }
+            var cdd = await _context.Candidates.FindAsync(id);
+            if (cdd != null)
+            {
+                _context.Candidates.Remove(cdd);
+            }
+
+            await _context.SaveChangesAsync();
+            return Redirect(nameof(ListCandidate));
         }
 
         private bool CheckRoleAdmin(string email)

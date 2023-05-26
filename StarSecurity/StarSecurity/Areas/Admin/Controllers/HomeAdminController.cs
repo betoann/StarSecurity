@@ -76,15 +76,20 @@ namespace StarSecurity.Areas.Admin.Controllers
             await HttpContext.SignOutAsync(
             scheme: "SecurityScheme");
 
-            return Redirect("Login");
+            HttpContext.Response.Cookies.Delete("email");
+
+            return Redirect(nameof(Login));
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            ViewBag.CountEmployee = await _context.Employees.CountAsync();
-            ViewBag.CountClient = await _context.Clients.CountAsync();
-            ViewBag.CountTask = await _context.Tasks.CountAsync(t => t.Status == 2);
+            var cEmpl = await _context.Employees.CountAsync();
+            var cClient = await _context.RegisterServices.CountAsync();
+            var cCash = await _context.CashServices.CountAsync();
+            ViewBag.CountEmployee = (cEmpl > 0) ? cEmpl : 0;
+            ViewBag.CountClient = (cClient > 0) ? cClient : 0;
+            ViewBag.CountCashService = (cCash > 0) ? cClient : 0;
 
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);

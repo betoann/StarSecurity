@@ -15,12 +15,12 @@
                             <div class="form-group col-md-2">
                                 <select class ="form-control" name="status">
                                     <option value="0">Status</option>
-                                    <option value="1">Action</option>
+                                    <option value="1">Active</option>
                                     <option value="2">Restting</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                                <select class="form-control" asp-items="ViewBag.Service" name="serviceId">
+                                <select class="form-control" asp-items="ViewBag.Department" name="departmentId">
                                     <option value="0">Department</option>
                                 </select>
                             </div>
@@ -58,10 +58,10 @@
                                     <td>@item.EmployeeCode</td>
                                     <td>@item.Name</td>
                                     <td>@item.Email</td>
-                                    <td>@item.ServiceId</td>
+                                        <td>@item.DepartmentId</td>
                                         @if (@item.Status == 1)
                                         {
-                                            <td><label class="badge badge-success">Action</label></td>
+                                            <td><label class="badge badge-success">Active</label></td>
                                         }
                                         else
                                         {

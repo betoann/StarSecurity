@@ -1,0 +1,80 @@
+﻿@model StarSecurity.Entites.Product
+@{
+    ViewData["Title"] = "EditProduct";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Product</h4>
+                    <form action="EditProduct" class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="Name">Name of Product</label>
+                            <input asp-for="Name" type="text" class="form-control" placeholder="Name of Product">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price">Price(vnd)</label>
+                            <input asp-for="Price" type="number" class="form-control" placeholder="Price">
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Image">Image</label>
+                            <input asp-for="Image" type="file" name="fileImage" class="form-control file-upload-info">
+                            <input type="hidden" asp-for="Image" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Warranty">Warranty(month)</label>
+                            <input asp-for="Warranty" type="number" class="form-control" placeholder="Warranty">
+                            <span asp-validation-for="Warranty" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PartnerId">Partner company name</label>
+                            <select asp-for="PartnerId" asp-items="ViewBag.Partner" class="js-example-basic-multiple w-100">
+                                <option value="">Select Partner</option>
+                            </select>
+                            <span asp-validation-for="PartnerId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Feature">Feature</label>
+                            <textarea asp-for="Feature" id="feature" class="classform-control"></textarea>
+                            <span asp-validation-for="Feature" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description">Description</label>
+                            <textarea asp-for="Description" id="description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="ti-file btn-icon-prepend"></i>
+                            Save
+                        </button>
+                        <button type="reset" class="btn btn-warning btn-icon-text">
+                            <i class="ti-reload btn-icon-prepend"></i>
+                            Reset
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ckeditorJS{
+    <script>
+        CKEDITOR.replace("feature");
+        CKEDITOR.replace("description");
+    </script>
+}
+    @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+

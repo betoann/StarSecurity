@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Successful transfer";
+}
+
+
+
+
+<script>
+    $(document).ready(function () {
+        swal({
+            title: "Successful transfer",
+            text: "We have sent details to your email",
+            icon: "success",
+            button: "Ok!",
+            dangerMode: true,
+        }).then((ok) => {
+            window.location.href = '/Home';
+        });
+    })
+
+</script>

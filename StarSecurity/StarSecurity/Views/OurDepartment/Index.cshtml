@@ -1,0 +1,29 @@
+﻿@model IEnumerable<StarSecurity.Entites.Department>
+@{
+    ViewData["Title"] = "OurBusiness";
+}
+
+<div id="ob" class="news-wrapper container">
+    <div class="title">
+        <p>Our Department</p>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="news-item">
+            <div class="news-image"><img src="~/upload/department/@item.Image" alt="Image"></div>
+            <div class="news-content">
+                <div class="title">
+                    <p>@item.Name</p>
+                </div>
+                <div class="content">
+                    <p>
+                        @item.Summary
+                    </p>
+                </div>
+                <div class="link">
+                    <a href="~/OurDepartment/DetailDepartment?id=@item.Id">More info</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

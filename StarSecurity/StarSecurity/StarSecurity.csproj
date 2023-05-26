@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\upload\recruitment\**" />
+    <Content Remove="wwwroot\upload\recruitment\**" />
+    <EmbeddedResource Remove="wwwroot\upload\recruitment\**" />
+    <None Remove="wwwroot\upload\recruitment\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
@@ -24,23 +31,30 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\upload\employee\" />
-    <Folder Include="wwwroot\upload\recruitment\" />
     <Folder Include="wwwroot\admin\css\" />
     <Folder Include="wwwroot\admin\js\" />
+    <Folder Include="wwwroot\upload\product\" />
+    <Folder Include="wwwroot\upload\partner\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\upload\service\cash_service.jpg" />
-    <None Include="wwwroot\upload\service\electronic_security_systems.jpg" />
-    <None Include="wwwroot\upload\service\manned_guarding.jpg" />
+    <None Include="wwwroot\upload\department\cash_service.jpg" />
+    <None Include="wwwroot\upload\department\electronic_security_systems.jpg" />
+    <None Include="wwwroot\upload\department\manned_guarding.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="CKFinder">
       <HintPath>..\..\..\..\..\..\Dowloads\plugin\CKFinder.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\upload\cv\CV - demo-TopCV.pdf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -14,45 +14,78 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Title">Title</label>
-                            <input asp-for="Title" type="text" class="form-control" placeholder="Vacancies">
+                            <input asp-for="Title" type="text" class="form-control" placeholder="Title">
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Vacancies">Vacancies</label>
-                            <input asp-for="Vacancies" type="text" class="form-control" placeholder="Vacancies">
-                            <span asp-validation-for="Vacancies" class="text-danger"></span>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Vacancies">Vacancies</label>
+                                    <input asp-for="Vacancies" type="text" class="form-control" placeholder="Vacancies">
+                                    <span asp-validation-for="Vacancies" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Count">Count</label>
+                                    <input asp-for="Count" type="number" class="form-control" placeholder="Count">
+                                    <span asp-validation-for="Count" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Count">Count</label>
-                            <input asp-for="Count" type="number" class="form-control" placeholder="Count">
-                            <span asp-validation-for="Count" class="text-danger"></span>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TimeStart">TimeStart</label>
+                                    <input asp-for="TimeStart" type="date" class="form-control" placeholder="TimeStart">
+                                    <span asp-validation-for="TimeStart" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TimeEnd">TimeEnd</label>
+                                    <input asp-for="TimeEnd" type="date" class="form-control" placeholder="TimeEnd">
+                                    <span asp-validation-for="TimeEnd" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Summary">Summary</label>
-                            <input asp-for="Summary" type="text" class="form-control" placeholder="Summary" >
-                            <span asp-validation-for="Summary" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ServiceId">Department</label>
-                            <select asp-for="ServiceId" class="form-control" asp-items="@ViewBag.Service"></select>
-                            <span asp-validation-for="ServiceId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Image">Image</label>
-                            <input asp-for="Image" type="file" name="fileImage" class="form-control file-upload-info">
-                            <span asp-validation-for="Image" class="text-danger"></span>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Salary">Salary</label>
+                                    <input asp-for="Salary" type="text" class="form-control" placeholder="Salary">
+                                    <span asp-validation-for="Salary" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Location">Work Location</label>
+                                    <input asp-for="Location" type="text" class="form-control" placeholder="Work Location">
+                                    <span asp-validation-for="Location" class="text-danger"></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label asp-for="Description">Description</label>
                             <textarea asp-for="Description" class="form-control" id="description"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
-                        
+                        <div class="form-group">
+                            <label asp-for="Request">Request</label>
+                            <textarea asp-for="Request" class="form-control" id="request"></textarea>
+                            <span asp-validation-for="Request" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Benefit">Benefit</label>
+                            <textarea asp-for="Benefit" class="form-control" id="benefit"></textarea>
+                            <span asp-validation-for="Benefit" class="text-danger"></span>
+                        </div>
                         <div class="form-group">
                             <label asp-for="Status">Status</label>
                             <select asp-for="Status" class="form-control">
-                                <option value="1">Recruiting</option>
-                                <option value="2">Stop</option>
+                                <option value="1">Display</option>
+                                <option value="0">Hide</option>
                             </select>
                             <span asp-validation-for="Status" class="text-danger"></span>
                         </div>
@@ -70,7 +103,9 @@
 
 @section ckeditorJS{
     <script>
+        CKEDITOR.replace("request");
         CKEDITOR.replace("description");
+        CKEDITOR.replace("benefit");
     </script>
 }
     @section Scripts {

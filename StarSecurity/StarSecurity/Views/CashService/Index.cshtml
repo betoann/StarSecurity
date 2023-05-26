@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewData["Title"] = "Cash Service";
+}
+
+<div class="content-wrapper">
+    <div class="container">
+        <div class="title text-center" style="margin-bottom: 50px;">
+            <h3>
+                Cash Service
+            </h3>
+        </div>
+        <div class="content">
+            <div>
+                <p>
+                    Cash Vault Services Our cash vaults use the latest high-speed technology to sort and process cash,
+                    coins and checks, with technology that guarantees bills are authentic and conditioned.
+                </p>
+                <p>
+                    The result? We process $5 billion in cash every day and wrap 425 million rolls of coins each year. 
+                    Device Installation Smart safes and cash recyclers can keep employees safe, protect against shrinkage and enable cash flow optimization. 
+                    And no matter what device meets your needs, GardaWorld Cash will ensure it's fully tested, connected and ready to work.
+                </p>
+                <p>
+                    Count on it. ATM installation, Maintenance and Management GardaWorld services ATMs in 48 states and throughout Canada to ensure that your machines are always ready for business.
+                </p>
+                <p>
+                    From making sure you have cash on hand to ensuring that your machines are in good working order, 
+                    you’re covered with our ATM Services. Cash-in-Transit Whether you’re transporting cash, precious metals or works of art,
+                    we have the experience and expertise—plus a fuel-efficient fleet of armored trucks that is the largest in
+                    the industry—to ensure your assets are protected.
+                </p>
+                <p>
+                    Back-office Operations and Management When managers and employees have to count and manage cash instead of taking care of customers,
+                    businesses face avoidable risks, inefficiencies and errors. Our back office processing makes cash accounting and reconciliations more accurate,
+                    reliable and safe, so you can focus on what matters most to your business.
+                </p>
+            </div>
+
+            <div>
+                <h5>New Payments Architecture</h5>
+                <p>The UK is in the middle of a once in a generation change to its core payment systems.
+                    Alongside infrastructure changes undertaken by the Bank of England to its high value gross settlement system and the
+                    developments in cross-border payments, the domestic retail interbank payments network is also being transformed
+                    into the New Payments Architecture (NPA) intended to deliver enhancements to payment services, innovation and increased choice. 
+                </p>
+                <p>
+                    In our engagement, on behalf of payment service providers that will ultimately rely upon and fund the NPA, 
+                    with stakeholders including the delivery body Pay.UK, we seek to inform the design and delivery priorities to enable innovation,
+                    consider the needs users and secure value for money for the industry and ultimately the end-users. We seek to ensure that consideration 
+                    is given to developments across the broader industry landscape with implications for inter-bank payments, including the development
+                    of emerging payments and related technologies, such that the NPA is well positioned for the future.
+                </p>
+            </div>
+
+            <div>
+                <h5>Cash Services </h5>
+                <p>While Covid-19 has accelerated the transition to digital forms of payment, at UK Finance we continue to promote the importance
+                    of consumer choice in this area. Cash remains a safe and widely used method of paying for goods and services,
+                    and is relied on by some of the most vulnerable groups in society. The Cash Services team supports members through 
+                    our forecasts of upcoming demand, the operational trading of notes and coin, and oversight of systemic cashflow risks. 
+                    In ensuring that the industry remains fit for purpose, we also work closely with the Royal Mint on tackling counterfeit
+                    in circulation and with the Bank of England on promoting environmental sustainability within the cash system. 
+                    The team also works closely with colleagues in Personal Finance to support the organisation’s work on Access to Cash, 
+                    run jointly with the independently chaired Cash Action Group. 
+                </p>
+            </div>
+
+            <div>
+                <h5>Single Asian Payment Area</h5>
+                <p>Capitalise on the benefits of SEPA membership, while being alert to regulatory developments which may threaten the UK’s future participation.</p>
+            </div>
+
+            <div class="text-center">
+                <h4><a href="~/CashService/Transfer">Use the service</a></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-apply">
+    <div class="container">
+        <h3>Sign up for the service for more advice</h3>
+        <p>(or contact starsecurity@gmail.com PH: 905.855.7827)</p>
+        <form>
+            <div class="form-group">
+                <label>Name(*)</label>
+                <input type="text" class="form-control" id="name" />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Email(*)</label>
+                        <input type="email" class="form-control" id="email" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Phone(*)</label>
+                        <input type="text" class="form-control" id="phone" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Address(*)</label>
+                <input type="text" class="form-control" id="address" />
+            </div>
+            <div class="form-group">
+                <label>Description(*)</label>
+                <textarea class="form-control" rows="5" id="description"></textarea>
+            </div>
+            <button type="button" class="btn btn-info" id="btn-submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function isEmail(emailAddress) {
+        var res = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        return res.test(emailAddress);
+    }
+    $(document).ready(function () {
+        $('#btn-submit').click(function () {
+            var name = $('#name').val().trim();
+            var email = $('#email').val().trim();
+            var phone = $('#phone').val().trim();
+            var address = $('#address').val().trim();
+            var description = $('#description').val().trim();
+
+            swal({
+                title: "Agree to send?",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((ok) => {
+                    if (ok) {
+                        if (name.length == 0 || email.length == 0 || phone.length == 0 || address.length == 0 || description.length == 0) {
+                            swal({
+                                title: "Failed",
+                                text: "Please complete all information!",
+                                icon: "error",
+                                button: "Ok!",
+                            });
+                        }
+                        else if (!isEmail(email)) {
+                            swal({
+                                title: "Failed",
+                                text: "Email format is incorrect!(Example@gmail.com)",
+                                icon: "error",
+                                button: "Ok!",
+                            });
+                        }
+                        else {
+                            $.ajax({
+                                url: '/CashService/RegisterService',
+                                type: 'post',
+                                data: {
+                                    name: name,
+                                    email: email,
+                                    phone: phone,
+                                    address: address,
+                                    description: description,
+                                },
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        swal({
+                                            title: data.msg,
+                                            text: "We will contact you as soon as possible!",
+                                            icon: "success",
+                                            button: "Ok!",
+                                            dangerMode: true,
+                                        }).then((ok) => {
+                                            window.location.reload();
+                                        });
+                                    } else {
+                                        swal({
+                                            title: data.msg,
+                                            text: "Registration failed, please try again!",
+                                            icon: "error",
+                                            button: "Ok!",
+                                        });
+                                    }
+                                },
+                                error: function (data) {
+                                    swal({
+                                        title: data.msg,
+                                        text: "Registration failed, please try again!",
+                                        icon: "error",
+                                        button: "Ok!",
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+        })
+    })
+
+</script>
+

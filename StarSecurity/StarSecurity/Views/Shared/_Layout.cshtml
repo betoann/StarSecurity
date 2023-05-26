@@ -30,12 +30,18 @@
             crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="~/js/site.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+
     <link rel="stylesheet" href="~/css/style.css">
     <link href="~/css/about.css" rel="stylesheet" />
     <link href="~/css/contact.css" rel="stylesheet" />
 
-    @*<script src="~/js/script.js"></script>*@
+    @*<script src="~/js/main.js"></script>*@
     <link rel="shortcut icon" href="~/admin/images/favicon.jpeg" />
 
 </head>
@@ -49,27 +55,53 @@
                     STAR SECURITY INC
                 </p>
                 <p>
-                    EXCEEDING SECURITY STANDARDS SINCE 1993
+                    EXCEEDING SECURITY STANDARDS SINCE 2000
                 </p>
             </div>
         </div>
         <div class="nav-wrapper">
             <div class="menu-wrapper">
-                <nav>
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></</li>
-                        <li><a href="~/Admin/HomeAdmin/Login">Employee Login</a></li>
-                        <li><a asp-controller="Ourbusiness" asp-action="Index">Ourbusiness</a></</li>
-                        <li><a asp-controller="Careers" asp-action="Index">Careers with us</a></</li>
-                        <li><a asp-controller="Contact" asp-action="Index">Contact</a></</li>
-                        <li><a asp-controller="About" asp-action="Index">About</a></li>
-                    </ul>
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="~/Admin/HomeAdmin/Login" class="nav-link">Employee Login</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Our Business
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @foreach (KeyValuePair<long, string> item in ViewBag.CategoryService)
+                                    {
+                                        <a class="dropdown-item nav-link" href="~/Business/Detail?id=@item.Key">@item.Value</a>
+                                    }
+                                    
+                                    <a class="dropdown-item nav-link" asp-controller="CashService" asp-action="Index">Cash Service</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Careers" asp-action="Index" class="nav-link">Careers with us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Contact" asp-action="Index" class="nav-link">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="About" asp-action="Index" class="nav-link">About us</a>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
             </div>
             <div class="contact-wrapper">
-                <p>
-                    starsecurity@gmail.com
-                </p>
+                <div>
+                    <p>
+                        starsecurity@gmail.com
+                    </p>
+                </div>
                 <div class="phone">
                     <p>PH: 905.855.7827</p>
                 </div>
@@ -136,3 +168,7 @@
 </body>
 
 </html>
+
+
+@await RenderSectionAsync("Scripts",false)
+@await RenderSectionAsync("swipper_slide",false)

@@ -2,11 +2,14 @@ using System.Text;
 using StarSecurity.Entites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using StarSecurity.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 builder.Services.AddDbContext<StarSecurityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConn")));
