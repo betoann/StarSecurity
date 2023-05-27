@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using StarSecurity.Entites;
 
 namespace StarSecurity.Entites
 {
@@ -72,7 +73,6 @@ namespace StarSecurity.Entites
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.Accounts)
                     .HasForeignKey(d => d.EmployeeId)
-                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Account_Employee");
             });
 
@@ -381,6 +381,11 @@ namespace StarSecurity.Entites
                     .IsUnicode(false);
 
                 entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.RegisterServices)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .HasConstraintName("FK_RegisterService_Employee");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.RegisterServices)

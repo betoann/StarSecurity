@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StarSecurity.Entites;
+using StarSecurity.Models.ViewModel;
 
 namespace StarSecurity.Areas.Admin.Controllers
 {
@@ -51,7 +52,15 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(res);
+
+            var prd = await _context.Products.FirstOrDefaultAsync(p => p.Id == res.ProductId);
+
+            var viewData = new WarrantyDetailModel
+            {
+                warranty = res,
+                product = prd
+            };
+            return View(viewData);
         }
 
         public async Task<IActionResult> AddWarranty()

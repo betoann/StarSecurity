@@ -87,9 +87,13 @@ namespace StarSecurity.Areas.Admin.Controllers
             var cEmpl = await _context.Employees.CountAsync();
             var cClient = await _context.RegisterServices.CountAsync();
             var cCash = await _context.CashServices.CountAsync();
+            var cCandidate = await _context.Candidates.CountAsync();
+
+
             ViewBag.CountEmployee = (cEmpl > 0) ? cEmpl : 0;
             ViewBag.CountClient = (cClient > 0) ? cClient : 0;
-            ViewBag.CountCashService = (cCash > 0) ? cClient : 0;
+            ViewBag.CountCashService = (cCash > 0) ? cCash : 0;
+            ViewBag.CountCandidate = (cCandidate > 0) ? cCandidate : 0;
 
             var email = HttpContext.Request.Cookies["email"];
             var emplView = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);

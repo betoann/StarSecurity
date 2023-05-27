@@ -1,6 +1,6 @@
 ﻿using StarSecurity.Entites;
 
-namespace StarSecurity.Models
+namespace StarSecurity.Models.ViewModel
 {
     public class HomeViewModel
     {

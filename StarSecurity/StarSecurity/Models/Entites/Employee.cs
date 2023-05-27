@@ -41,5 +41,6 @@ namespace StarSecurity.Entites
         public virtual Department? Department { get; set; }
         public virtual Role? RoleCodeNavigation { get; set; }
         public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<RegisterService> RegisterServices { get; set; }
     }
 }

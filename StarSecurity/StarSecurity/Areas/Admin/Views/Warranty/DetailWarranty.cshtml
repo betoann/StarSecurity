@@ -1,4 +1,4 @@
-﻿@model StarSecurity.Entites.Warranty
+﻿@model StarSecurity.Models.ViewModel.WarrantyDetailModel
 @{
     ViewData["Title"] = "DetailWarranty";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,28 +10,28 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <h3>Name: @Model.Name</h3>
+                        <h3>Name: @Model.warranty.Name</h3>
                     </div>
                     <div class="row">
-                        <div class="col-md-6"><h4>Email: <a href="mailto:@Model.Email">@Model.Email</a></h4></div>
-                        <div class="col-md-6"><h4>Phone: <a href="tel:@Model.Phone">@Model.Phone</a></h4></div>
+                        <div class="col-md-6"><h4>Email: <a href="mailto:@Model.warranty.Email">@Model.warranty.Email</a></h4></div>
+                        <div class="col-md-6"><h4>Phone: <a href="tel:@Model.warranty.Phone">@Model.warranty.Phone</a></h4></div>
                     </div>
                     <div class="row">
-                        <h4>Address: @Model.Address</h4>
+                        <h4>Address: @Model.warranty.Address</h4>
                     </div>
                     <div class="row">
-                        <div class="col-md-4"><h4>Product: @Model.ProductId</h4></div>
-                        <div class="col-md-4"><h4>Price: @String.Format("{0:0,00}", @Model.Price) <sup>vnd</sup></h4></div>
+                        <div class="col-md-4"><h4>Product: <a href="~/Admin/Product/DetailProduct?id=@Model.product.Id">@Model.product.Name</a></h4></div>
+                        <div class="col-md-4"><h4>Price: @String.Format("{0:0,00}", @Model.warranty.Price) <sup>vnd</sup></h4></div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            @if (Model.TimeWarranty > DateTime.Now)
+                            @if (Model.warranty.TimeWarranty > DateTime.Now)
                             {
-                                <h4 class="text-success">TimeWarranty: @Model.TimeWarranty</h4>
+                                <h4 class="text-success">TimeWarranty: @Model.warranty.TimeWarranty</h4>
                             }
                             else
                             {
-                                <h4 class="text-danger">TimeWarranty: @Model.TimeWarranty</h4>
+                                <h4 class="text-danger">TimeWarranty: @Model.warranty.TimeWarranty</h4>
                             }
                             
                         </div>
@@ -41,12 +41,12 @@
                     <div>
                         <h4>Description:</h4>
                         <blockquote class="blockquote">
-                            @Html.Raw(@Model.Description)
+                            @Html.Raw(@Model.warranty.Description)
                         </blockquote>
                     </div>
 
                     <div>
-                        <a href="~/Admin/Warranty/EditWarranty?id=@Model.Id" class="btn btn-dark btn-icon-text">
+                        <a href="~/Admin/Warranty/EditWarranty?id=@Model.warranty.Id" class="btn btn-dark btn-icon-text">
                             Edit
                             <i class="ti-file btn-icon-append"></i>
                         </a>

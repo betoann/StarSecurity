@@ -14,12 +14,6 @@ builder.Services.AddScoped<IVnPayService, VnPayService>();
 builder.Services.AddDbContext<StarSecurityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConn")));
 
-
-//builder.Services.Configure<CookiePolicyOptions>(options =>
-//    { options.CheckConsentNeeded = context => true;
-//        options.MinimumSameSitePolicy = SameSiteMode.None;
-//    });
-
 builder.Services.AddAuthentication("SecurityScheme")
     .AddCookie("SecurityScheme", options =>
     {

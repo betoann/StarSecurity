@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using StarSecurity.Areas.Admin.Models;
 using StarSecurity.Common;
 using StarSecurity.Entites;
+using StarSecurity.Models.ViewModel;
 
 namespace StarSecurity.Areas.Admin.Controllers
 {
@@ -62,7 +63,18 @@ namespace StarSecurity.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(res);
+
+            var department = await _context.Departments.FirstOrDefaultAsync(d => d.Id == res.DepartmentId);
+            var client = await _context.RegisterServices.Where(s => s.EmployeeId == res.Id).ToListAsync();
+
+            var viewData = new EmployeeDetailModel
+            {
+                employee = res,
+                department = department,
+                client = client
+            };
+
+            return View(viewData);
         }
 
         public async Task<IActionResult> AddEmployee()

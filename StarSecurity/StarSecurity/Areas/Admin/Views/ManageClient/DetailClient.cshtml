@@ -1,4 +1,4 @@
-﻿@model StarSecurity.Entites.RegisterService
+﻿@model StarSecurity.Models.ViewModel.ManageClientViewModel
 @{
     ViewData["Title"] = "DetailClient";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,34 +10,45 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <h3>Name: @Model.Name</h3>
+                        <h3>Name: @Model.registerService.Name</h3>
                     </div>
                     <div class="row">
-                        <div class="col-md-6"><h4>Email: <a href="mailto:@Model.Email">@Model.Email</a></h4></div>
-                        <div class="col-md-6"><h4>Phone: <a href="tel:@Model.Phone">@Model.Phone</a></h4></div>
+                        <div class="col-md-6"><h4>Email: <a href="mailto:@Model.registerService.Email">@Model.registerService.Email</a></h4></div>
+                        <div class="col-md-6"><h4>Phone: <a href="tel:@Model.registerService.Phone">@Model.registerService.Phone</a></h4></div>
                     </div>
                     <div class="row">
-                        <h4>Address: @Model.Address</h4>
+                        <h4>Address: @Model.registerService.Address</h4>
                     </div>
                     <div class="row">
-                        @if(Model.ServiceId != null){
-                            <div class="col-md-4"><h4>Interested service: <a href="~/Admin/Service/DetailService?id=@Model.ServiceId">Click here to view</a></h4></div>
-                        }
-                        @if (Model.ProductId != null)
+                        @if (Model.registerService.ServiceId != null)
                         {
-                            <div class="col-md-4"><h4>Interested products: <a href="~/Admin/Product/DetailProduct?id=@Model.ProductId">Click here to view</a></h4></div>
+                            <div class="col-md-4"><h4>Interested service: @Model.service.Name</h4></div>
+                        }
+                        @if (Model.registerService.ProductId != null)
+                        {
+                            <div class="col-md-4"><img src="~/upload/product/@Model.product.Image" /></div>
+                            <div class="col-md-8"><h4>Interested products: @Model.product.Name</h4></div>
+                        }
+                    </div>
+                    <div class="row">
+                        @if (Model.registerService.EmployeeId != null)
+                        {
+                            <div class="col-md-4"><h4 class="text-success">Staff assigned: @Model.employee.Name</h4></div>
+                            <div class="col-md-4"><h4>EmployeeCode: @Model.employee.EmployeeCode</h4></div>
+                        }else{
+                            <div class="col-md-4"><h4 class="text-danger">Staff assigned: No staff yet</h4></div>
                         }
                     </div>
                     <br />
                     <div>
                         <h4>Description:</h4>
                         <blockquote class="blockquote">
-                            @Html.Raw(@Model.Description)
+                            @Html.Raw(@Model.registerService.Description)
                         </blockquote>
                     </div>
 
                     <div>
-                        <a href="~/Admin/RegisterService/ListRegisterService" class="btn btn-danger btn-icon-text">Back to list</a>
+                        <a href="~/Admin/ManageClient/ListClient" class="btn btn-danger btn-icon-text">Back to list</a>
                     </div>
                 </div>
             </div>

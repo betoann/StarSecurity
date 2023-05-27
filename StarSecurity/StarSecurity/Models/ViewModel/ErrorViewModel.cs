@@ -1,4 +1,4 @@
-namespace StarSecurity.Models
+namespace StarSecurity.Models.ViewModel
 {
     public class ErrorViewModel
     {

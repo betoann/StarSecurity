@@ -30,6 +30,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Address</th>
+                                    <th>Staff assigned</th>
                                     <th>Status</th>
                                     <th>#</th>
                                 </tr>
@@ -40,6 +41,11 @@
                                         <td>@item.Name</td>
                                         <td>@item.Email</td>
                                         <td>@item.Address</td>
+                                        @if(item.EmployeeId != null){
+                                            <td class="text-success">Staff already</td>
+                                        }else{
+                                            <td class="text-danger">No staff yet</td>
+                                        }
                                         @if(item.Status == 0){
                                             <td class="text-danger">Waitting</td>
                                         }
@@ -49,7 +55,8 @@
                                         }
                                     <td>
                                         <a href="~/Admin/ManageClient/DetailClient?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-eye"></i></a>
-                                            <a href="#" onclick="if(confirm('Processed?') == true){ location.href = '/Admin/ManageClient/EditClient?id=@item.Id' }" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-bookmark-check"></i></a>
+                                            <a href="~/Admin/ManageClient/StaffAssign?id=@item.Id" class="btn btn-inverse-info btn-rounded btn-icon"><i class="mdi mdi-account-plus"></i></a>
+                                            <a href="#" onclick="if(confirm('Done?') == true){ location.href = '/Admin/ManageClient/EditStatus?id=@item.Id' }" class="btn btn-inverse-primary btn-rounded btn-icon"><i class="mdi mdi-bookmark-check"></i></a>
                                             <a href="#" onclick="if(confirm('You definitely delete?') == true){ location.href = '/Admin/ManageClient/DeleteClient?id=@item.Id' }" class="btn btn-inverse-danger btn-rounded btn-icon"><i class="mdi mdi-delete-forever"></i></a>
                                     </td>
                                 </tr>

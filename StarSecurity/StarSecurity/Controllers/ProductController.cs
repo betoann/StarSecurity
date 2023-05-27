@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StarSecurity.Entites;
-using StarSecurity.Models;
+using StarSecurity.Models.ViewModel;
 
 namespace StarSecurity.Controllers
 {
